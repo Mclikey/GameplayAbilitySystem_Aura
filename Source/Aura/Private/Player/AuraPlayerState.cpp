@@ -7,14 +7,16 @@
 
 AAuraPlayerState::AAuraPlayerState()
 {
-
+	//初始化敌人类的AbilitySystemComponent
 	AbilitySystemComponent = CreateDefaultSubobject<UAuraAbilitySystemComponent>("AbilitySystemComponent");
+	//开启服务端复制，将该组件的状态和行为在网络环境下从服务器同步到客户端
 	AbilitySystemComponent->SetIsReplicated(true);
+	//设服务端复制方法- Mixed(适合主角)
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 
 	AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSet");
 
-	//网络更新频率
+	//服务器更新客户端的频率
 	NetUpdateFrequency = 100.f;
 
 }

@@ -22,14 +22,15 @@ class AURA_API AAuraPlayerState : public APlayerState, public IAbilitySystemInte
 public:
 	AAuraPlayerState();
 
+	//获取AbilitySystem,继承IAbilitySystemInterface接口，重写函数
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+	//获取AttributeSet
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 
 protected:
-
+	//GAS系统
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
-
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
 	
