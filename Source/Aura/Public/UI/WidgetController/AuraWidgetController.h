@@ -51,6 +51,8 @@ public:
 	//π„≤•≥ı º÷µ
 	virtual void BroadcastInitivalValues();
 
+	virtual void BindCallbacksToDependencies();
+
 protected:
 
 	UPROPERTY(BlueprintReadOnly, Category = "WidgetController")

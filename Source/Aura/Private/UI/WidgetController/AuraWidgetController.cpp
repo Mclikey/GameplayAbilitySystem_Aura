@@ -16,3 +16,8 @@ void UAuraWidgeController::BroadcastInitivalValues()
 {
 
 }
+
+void UAuraWidgeController::BindCallbacksToDependencies()
+{
+
+}

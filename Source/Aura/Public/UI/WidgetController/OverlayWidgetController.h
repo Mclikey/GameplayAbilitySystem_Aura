@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UI/WidgetController/AuraWidgetController.h"
+#include "GameplayEffect.h"
 #include "OverlayWidgetController.generated.h"
 
 
@@ -16,7 +17,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxManaChangedSignature, float, N
 /**
  * 
  */
-UCLASS()
+UCLASS(BlueprintType,Blueprintable)
 class AURA_API UOverlayWidgetController : public UAuraWidgeController
 {
 	GENERATED_BODY()
@@ -25,6 +26,7 @@ public:
 
 	virtual void BroadcastInitivalValues() override;
 	
+	virtual void BindCallbacksToDependencies()override;
 
 	//BlueprintAssignable：应显示该属性，以供在蓝图中分配，蓝图中可绑定委托
 	//BlueprintCallable：应显示该属性，以在蓝图代码中调用，蓝图中可绑定委托
@@ -39,4 +41,12 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category = "GAS|Attributes")
 	FOnMaxManaChangedSignature OnMaxManaChanged;
+
+
+protected:
+
+	void HealthChanged(const FOnAttributeChangeData& Data) const;
+	void MaxHealthChanged(const FOnAttributeChangeData& Data) const;
+	void ManaChanged(const FOnAttributeChangeData& Data) const;
+	void MaxManaChanged(const FOnAttributeChangeData& Data) const;
 };
