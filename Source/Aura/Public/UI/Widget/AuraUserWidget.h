@@ -24,7 +24,7 @@ public:
 
 protected:
 
-	UFUNCTION(BlueprintImplementableEvent)
+	UFUNCTION(BlueprintImplementableEvent) //蓝图可实施事件
 	void WidgetControllerSet();
 	
 };

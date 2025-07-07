@@ -7,7 +7,7 @@
 
 AAuraPlayerState::AAuraPlayerState()
 {
-	//初始化敌人类的AbilitySystemComponent
+	//初始化玩家类的AbilitySystemComponent
 	AbilitySystemComponent = CreateDefaultSubobject<UAuraAbilitySystemComponent>("AbilitySystemComponent");
 	//开启服务端复制，将该组件的状态和行为在网络环境下从服务器同步到客户端
 	AbilitySystemComponent->SetIsReplicated(true);
