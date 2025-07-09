@@ -14,7 +14,6 @@ void UOverlayWidgetController::BroadcastInitivalValues()
 	OnMaxHealthChanged.Broadcast(AuraAttributeSet->GetMaxHealth());
 	OnManaChanged.Broadcast(AuraAttributeSet->GetMana());
 	OnMaxManaChanged.Broadcast(AuraAttributeSet->GetMaxMana());
-
 	
 }
 
@@ -22,6 +21,10 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 {
 	//将属性集转换为Aura属性集并且可以访问这些属性，使用属性访问器来设置
 	const UAuraAttributeSet* AuraAttributeSet = CastChecked<UAuraAttributeSet>(AttributeSet);
+
+
+	//AbilitySystem提供了一个监听数据变化的函数
+	// AbilitySystem.GetGameplayAttributeValueChangeDelegate(想要监听的数据).AddUObject(要绑定的 UObject 实例，&成员函数)
 
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
 		AuraAttributeSet->GetHealthAttribute()).AddUObject(this,&UOverlayWidgetController::HealthChanged);

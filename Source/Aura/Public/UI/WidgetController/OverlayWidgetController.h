@@ -31,6 +31,8 @@ public:
 	//BlueprintAssignable：应显示该属性，以供在蓝图中分配，蓝图中可绑定委托
 	//BlueprintCallable：应显示该属性，以在蓝图代码中调用，蓝图中可绑定委托
 	UPROPERTY(BlueprintAssignable, Category = "GAS|Attributes")
+
+	//FOnHealthChangedSignature消息名
 	FOnHealthChangedSignature OnHealthChanged;
 
 	UPROPERTY(BlueprintAssignable, Category = "GAS|Attributes")
@@ -45,6 +47,7 @@ public:
 
 protected:
 
+	//FOnAttributeChangeData固定结构体，属性更改时使用的临时参数结构，只有两个，一个新数据一个旧数据
 	void HealthChanged(const FOnAttributeChangeData& Data) const;
 	void MaxHealthChanged(const FOnAttributeChangeData& Data) const;
 	void ManaChanged(const FOnAttributeChangeData& Data) const;

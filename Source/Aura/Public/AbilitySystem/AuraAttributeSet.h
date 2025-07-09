@@ -23,6 +23,13 @@ class AURA_API UAuraAttributeSet : public UAttributeSet
 	GENERATED_BODY()
 
 public:
+
+	//属性访问器有4种： 
+	// 获取属性（GAMEPLAYATTRIBUTE_PROPERTY_GETTER）、 
+	// 获取属性值（GAMEPLAYATTRIBUTE_PROPERTY_VALUE_GETTER）、 
+	// 初始化值（GAMEPLAYATTRIBUTE_PROPERTY_VALUE_INITTER）、 
+	// 修改属性值（GAMEPLAYATTRIBUTE_PROPERTY_VALUE_SETTER）
+
 	UAuraAttributeSet();
 
 	//指定那些属性需要在服务器和客户端之间同步，并定义每个属性的复制条件（Replication Condition）
