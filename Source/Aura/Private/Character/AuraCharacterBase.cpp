@@ -3,6 +3,7 @@
 
 #include "Character/AuraCharacterBase.h"
 
+
 // Sets default values
 AAuraCharacterBase::AAuraCharacterBase()
 {
@@ -17,6 +18,12 @@ AAuraCharacterBase::AAuraCharacterBase()
 UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;
+}
+
+void AAuraCharacterBase::InitAbilityActorInfo()
+{
+
+
 }
 
 // Called when the game starts or when spawned

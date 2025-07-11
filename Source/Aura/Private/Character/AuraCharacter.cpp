@@ -40,10 +40,15 @@ void AAuraCharacter::InitAbilityActorInfo()
 {
 	AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
 	check(AuraPlayerState);
-	//初始化PlayerState中ASC的信息
-	AuraPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(AuraPlayerState, this);
+	
 	//将playerState中的ASC和AS赋值给Charater,因为在character的构造函数中没有为ASC和AS赋值
 	AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();
+	//初始化PlayerState中ASC的信息
+	AbilitySystemComponent->InitAbilityActorInfo(AuraPlayerState, this);
+
+	//触发Actor的技能信息设置回调
+	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
+
 	AttributeSet = AuraPlayerState->GetAttributeSet();
 
 	AAuraPlayerController* AuraPlayerController = Cast<AAuraPlayerController>(GetController());

@@ -21,6 +21,10 @@ public:
 	//÷ÿ–¥GetAbilitySystemComponent()
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
+	virtual void InitAbilityActorInfo();
+
+
+
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 
 protected:
