@@ -42,6 +42,12 @@ struct FEffectProperties
  	GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
  	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 
+
+// typedef is specific to the FGameplayAttribute() signature, but TstaticFunptr is generic to any signature chosen
+//typedef TBasestaticDelegateInstance<FGameplayAttribute(), FefaultDelegateUserPolicy>::FFuncPtr FAttributeFuncPtr,
+template<class T>
+using TStaticFuncPtr = typename TBaseStaticDelegateInstance<T, FDefaultDelegateUserPolicy>::FFuncPtr;
+
 /**
  * 
  */
@@ -69,6 +75,10 @@ public:
 	virtual void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data) override;
 
 
+	//给AS添加一个变量属性，类型为Map，key为Tag标签，Value为对应的委托,
+	TMap<FGameplayTag, TStaticFuncPtr<FGameplayAttribute()>> TagsToAttributes;
+
+
 	/*
 		Primary Attributes
 	*/
@@ -92,8 +102,6 @@ public:
 	/*
 		Secondary Attributes
 
-		MaxHealth 血量上限，基于Vigor 体力属性计算
-		MaxMana 蓝量上限，基于Intelligence 智力属性
 		Armor 防御，基于Resilience 韧性属性计算， 降低所受伤害
 		ArmorPenetration 护甲穿透，基于Resilience 韧性属性计算，降低敌人的防御，增加暴击率
 		BlockChance 格挡率 ，基于Armor 防御属性计算，增加格挡伤害概率，触发时，降低一半所受伤害
@@ -102,6 +110,8 @@ public:
 		CriticalHitResistance 暴击抵抗，基于Armor 防御属性计算，降低敌人的暴击概率
 		HealthRegeneration 血量自动恢复，基于Vigor 体力属性计算，每秒自动恢复一定血量
 		ManaRegeneration 蓝量自动恢复，基于Intelligence 智力属性，每秒自动恢复蓝量
+		MaxHealth 血量上限，基于Vigor 体力属性计算
+		MaxMana 蓝量上限，基于Intelligence 智力属性
 
 	*/
 
