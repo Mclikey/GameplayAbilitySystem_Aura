@@ -48,7 +48,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetWidgetControllerParams(const FWidgetControllerParams& WCParams);
 
-	//�㲥��ʼֵ
+	//广播初始值
 	UFUNCTION(BlueprintCallable)
 	virtual void BroadcastInitivalValues();
 

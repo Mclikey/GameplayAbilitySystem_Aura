@@ -9,9 +9,9 @@ FAuraGameplayTags FAuraGameplayTags::GameplayTags;
 void FAuraGameplayTags::InitializeNativeGameplayTags()
 {
 
-	//Èç¹ûÓÃÖĞÎÄ£¬±àÂë»á²»¹ı£¬´«ÈëÒ»¸ö·ÇUTF-8±àÂëµÄ×Ö·û´®»á±¨´í
-	//UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Secondary.Armor"), FString("¼õÉÙÊÜµ½µÄÉËº¦£¬Ìá¸ß¸ñµ²ÂÊ"));
-	//GameplayTags.Attributes_Secondary_Armor = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Secondary.Armor"), FString(TEXT("¼õÉÙÊÜµ½µÄÉËº¦£¬Ìá¸ß¸ñµ²ÂÊ %s")));
+	//å¦‚æœç”¨ä¸­æ–‡ï¼Œç¼–ç ä¼šä¸è¿‡ï¼Œä¼ å…¥ä¸€ä¸ªéUTF-8ç¼–ç çš„å­—ç¬¦ä¸²ä¼šæŠ¥é”™
+	//UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Secondary.Armor"), FString("å‡å°‘å—åˆ°çš„ä¼¤å®³ï¼Œæé«˜æ ¼æŒ¡ç‡"));
+	//GameplayTags.Attributes_Secondary_Armor = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Secondary.Armor"), FString(TEXT("å‡å°‘å—åˆ°çš„ä¼¤å®³ï¼Œæé«˜æ ¼æŒ¡ç‡ %s")));
 	//GameplayTags.Attributes_Secondary_Armor = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Secondary.Armor"), FString("Reduces damage taken, improves Block Chance"));
 
 

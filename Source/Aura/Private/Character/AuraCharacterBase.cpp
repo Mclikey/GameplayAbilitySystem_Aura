@@ -41,7 +41,7 @@ void AAuraCharacterBase::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> Gameplay
 	check(IsValid(GetAbilitySystemComponent()));
 
 	FGameplayEffectContextHandle ContextHandle = GetAbilitySystemComponent()->MakeEffectContext();
-	ContextHandle.AddSourceObject(this);//ÉèÖÃÔ´¶ÔÏó£¬¿ÉÒÔÍ¨¹ıSpec.GetContext().GetSourceObject()È¥»ñÈ¡Ô´¶ÔÏó
+	ContextHandle.AddSourceObject(this);//è®¾ç½®æºå¯¹è±¡ï¼Œå¯ä»¥é€šè¿‡Spec.GetContext().GetSourceObject()å»è·å–æºå¯¹è±¡
 	const FGameplayEffectSpecHandle SpecHandle = GetAbilitySystemComponent()->MakeOutgoingSpec(GameplayEffectClass, Level, ContextHandle);
 	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*SpecHandle.Data.Get(), GetAbilitySystemComponent());
 
@@ -56,7 +56,7 @@ void AAuraCharacterBase::InitializeDefaultAttributes() const
 
 void AAuraCharacterBase::AddCharacterAbilities()
 {
-	if (!HasAuthority()) return; //²éÑ¯ÊÇ·ñÓµÓĞÍøÂçÈ¨ÏŞ£¬Ó¦ÓÃ¼¼ÄÜĞèÒªÌí¼Ó¸ø·şÎñÆ÷
+	if (!HasAuthority()) return; //æŸ¥è¯¢æ˜¯å¦æ‹¥æœ‰ç½‘ç»œæƒé™ï¼Œåº”ç”¨æŠ€èƒ½éœ€è¦æ·»åŠ ç»™æœåŠ¡å™¨
 	UAuraAbilitySystemComponent* ASC = CastChecked<UAuraAbilitySystemComponent>(GetAbilitySystemComponent());
 	ASC->AddCharacterAbilities(StartupAbilities);
 }

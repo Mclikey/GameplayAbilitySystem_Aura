@@ -9,10 +9,10 @@
 
 UOverlayWidgetController* UAuraAbilitySystemLibrary::GetOverlayWidgetController(const UObject* WorldContextObject)
 {
-	//»ñÈ¡µ½playerController£¬ ĞèÒª´«ÈëÒ»¸öÊÀ½ç¿Õ¼äÉÏÏÂÎÄµÄ¶ÔÏó£¬ÓÃÓÚµÃµ½¶ÔÓ¦ÊÀ½çÖĞµÄPCÁĞ±í£¬0Îª±¾µØÊ¹ÓÃµÄPC
+	//è·å–åˆ°playerControllerï¼Œ éœ€è¦ä¼ å…¥ä¸€ä¸ªä¸–ç•Œç©ºé—´ä¸Šä¸‹æ–‡çš„å¯¹è±¡ï¼Œç”¨äºå¾—åˆ°å¯¹åº”ä¸–ç•Œä¸­çš„PCåˆ—è¡¨ï¼Œ0ä¸ºæœ¬åœ°ä½¿ç”¨çš„PC
 	if (APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0))
 	{
-		//´ÓPC»ñÈ¡µ½HUD£¬ÎÒÃÇ¾Í¿ÉÒÔ´ÓHUD»ñµÃ¶ÔÓ¦µÄController
+		//ä»PCè·å–åˆ°HUDï¼Œæˆ‘ä»¬å°±å¯ä»¥ä»HUDè·å¾—å¯¹åº”çš„Controller
 		if (AAuraHUD* AuraHUD = Cast<AAuraHUD>(PC->GetHUD()))
 		{
 			AAuraPlayerState* PS = PC->GetPlayerState<AAuraPlayerState>();
@@ -27,10 +27,10 @@ UOverlayWidgetController* UAuraAbilitySystemLibrary::GetOverlayWidgetController(
 
 UAttributeMenuWidgetController* UAuraAbilitySystemLibrary::GetAttributeMenuWidgetController(const UObject* WorldContextObject)
 {
-	//»ñÈ¡µ½playerController£¬ ĞèÒª´«ÈëÒ»¸öÊÀ½ç¿Õ¼äÉÏÏÂÎÄµÄ¶ÔÏó£¬ÓÃÓÚµÃµ½¶ÔÓ¦ÊÀ½çÖĞµÄPCÁĞ±í£¬0Îª±¾µØÊ¹ÓÃµÄPC
+	//è·å–åˆ°playerControllerï¼Œ éœ€è¦ä¼ å…¥ä¸€ä¸ªä¸–ç•Œç©ºé—´ä¸Šä¸‹æ–‡çš„å¯¹è±¡ï¼Œç”¨äºå¾—åˆ°å¯¹åº”ä¸–ç•Œä¸­çš„PCåˆ—è¡¨ï¼Œ0ä¸ºæœ¬åœ°ä½¿ç”¨çš„PC
 	if (APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0))
 	{
-		//´ÓPC»ñÈ¡µ½HUD£¬ÎÒÃÇ¾Í¿ÉÒÔ´ÓHUD»ñµÃ¶ÔÓ¦µÄController
+		//ä»PCè·å–åˆ°HUDï¼Œæˆ‘ä»¬å°±å¯ä»¥ä»HUDè·å¾—å¯¹åº”çš„Controller
 		if (AAuraHUD* AuraHUD = Cast<AAuraHUD>(PC->GetHUD()))
 		{
 			AAuraPlayerState* PS = PC->GetPlayerState<AAuraPlayerState>();

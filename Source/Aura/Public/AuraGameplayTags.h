@@ -6,8 +6,8 @@
 #include "GameplayTagContainer.h"
 
  /**
-  * GameplayTags ±êÇ© µ¥ÀıÄ£Ê½
-  * ÄÚ²¿°üº¬Ô­ÉúµÄÏîÄ¿ÖĞÊ¹ÓÃµÄ±êÇ©
+  * GameplayTags æ ‡ç­¾ å•ä¾‹æ¨¡å¼
+  * å†…éƒ¨åŒ…å«åŸç”Ÿçš„é¡¹ç›®ä¸­ä½¿ç”¨çš„æ ‡ç­¾
   */
 
 struct FAuraGameplayTags
@@ -33,12 +33,12 @@ public:
 	FGameplayTag Attributes_Secondary_MaxHealth;
 	FGameplayTag Attributes_Secondary_MaxMana;
 
-	FGameplayTag InputTag_LMB; //Êó±ê×ó¼ü
-	FGameplayTag InputTag_RMB; //Êó±êÓÒ¼ü
-	FGameplayTag InputTag_1; //1¼ü
-	FGameplayTag InputTag_2; //2¼ü
-	FGameplayTag InputTag_3; //3¼ü
-	FGameplayTag InputTag_4; //4¼ü
+	FGameplayTag InputTag_LMB; //é¼ æ ‡å·¦é”®
+	FGameplayTag InputTag_RMB; //é¼ æ ‡å³é”®
+	FGameplayTag InputTag_1; //1é”®
+	FGameplayTag InputTag_2; //2é”®
+	FGameplayTag InputTag_3; //3é”®
+	FGameplayTag InputTag_4; //4é”®
 
 
 private:

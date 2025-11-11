@@ -13,7 +13,7 @@ UOverlayWidgetController* AAuraHUD::GetOverlayWidgetController(const FWidgetCont
 		OverlayWidgetController = NewObject<UOverlayWidgetController>(this, OverlayWidgetControllerClass);
 		OverlayWidgetController->SetWidgetControllerParams(WCParams);
 
-		//ÊÂ¼ş¼àÌı»Øµ÷ÒÀÀµ
+		//äº‹ä»¶ç›‘å¬å›è°ƒä¾èµ–
 		OverlayWidgetController->BindCallbacksToDependencies();
 
 	}
@@ -26,7 +26,7 @@ UAttributeMenuWidgetController* AAuraHUD::GetAttributeMenuWidgetController(const
 	{
 		AttributeMenuWidgetController = NewObject<UAttributeMenuWidgetController>(this, AttributeMenuWidgetControllerClass);
 		AttributeMenuWidgetController->SetWidgetControllerParams(WCParams);
-		AttributeMenuWidgetController->BindCallbacksToDependencies(); //°ó¶¨¼àÌıÊıÖµ±ä»¯
+		AttributeMenuWidgetController->BindCallbacksToDependencies(); //ç»‘å®šç›‘å¬æ•°å€¼å˜åŒ–
 	}
 	return AttributeMenuWidgetController;
 }
@@ -34,25 +34,25 @@ UAttributeMenuWidgetController* AAuraHUD::GetAttributeMenuWidgetController(const
 
 void AAuraHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS)
 {
-	checkf(OverlayWidgetClass, TEXT("OverlayWidgetClass ÒÑ³õÊ¼»¯£¬ÇëÌîĞ´BP_AuraHUD"));
-	checkf(OverlayWidgetControllerClass, TEXT("OverlayWidgetControllerClass ÒÑ³õÊ¼»¯£¬ÇëÌîĞ´BP_AuraHUD"));
+	checkf(OverlayWidgetClass, TEXT("OverlayWidgetClass å·²åˆå§‹åŒ–ï¼Œè¯·å¡«å†™BP_AuraHUD"));
+	checkf(OverlayWidgetControllerClass, TEXT("OverlayWidgetControllerClass å·²åˆå§‹åŒ–ï¼Œè¯·å¡«å†™BP_AuraHUD"));
 
-	//1.´´½¨¸²¸Ç²ãĞ¡²¿¼ş
+	//1.åˆ›å»ºè¦†ç›–å±‚å°éƒ¨ä»¶
 	UUserWidget* Widget = CreateWidget<UUserWidget>(GetWorld(), OverlayWidgetClass);
 	OverlayWidget = Cast<UAuraUserWidget>(Widget);
 
-	//2.´´½¨Ğ¡²¿¼ş¿ØÖÆÆ÷
+	//2.åˆ›å»ºå°éƒ¨ä»¶æ§åˆ¶å™¨
 	const FWidgetControllerParams WidgetControllerParams(PC, PS, ASC, AS);
-	//»ñÈ¡¸²¸Ç²ãĞ¡²¿¼ş¿ØÖÆÆ÷Ö¸Õë
+	//è·å–è¦†ç›–å±‚å°éƒ¨ä»¶æ§åˆ¶å™¨æŒ‡é’ˆ
 	UOverlayWidgetController* WidgetController = GetOverlayWidgetController(WidgetControllerParams);
-	//½«²ÎÊı¸³Öµ¸øĞ¡²¿¼ş¿ØÖÆÆ÷
+	//å°†å‚æ•°èµ‹å€¼ç»™å°éƒ¨ä»¶æ§åˆ¶å™¨
 	OverlayWidget->SetWidgetController(WidgetController);
 
-	//3.½«¸²¸Ç²ãĞ¡²¿¼ş¿ØÖÆÆ÷Ìí¼Óµ½¸²¸Ç²ãĞ¡²¿¼ş
+	//3.å°†è¦†ç›–å±‚å°éƒ¨ä»¶æ§åˆ¶å™¨æ·»åŠ åˆ°è¦†ç›–å±‚å°éƒ¨ä»¶
 	//OverlayWidget->AddWidgetController(OverlayWidgetController);
 
-	//4.¹ã²¥³õÊ¼Öµ
+	//4.å¹¿æ’­åˆå§‹å€¼
 	WidgetController->BroadcastInitivalValues();
-	//½«¸²¸Ç²ãĞ¡²¿¼ş´òÓ¡µ½ÆÁÄ»
+	//å°†è¦†ç›–å±‚å°éƒ¨ä»¶æ‰“å°åˆ°å±å¹•
 	Widget->AddToViewport();
 }

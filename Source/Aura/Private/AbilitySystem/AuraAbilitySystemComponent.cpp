@@ -7,7 +7,7 @@
 
 void UAuraAbilitySystemComponent::AbilityActorInfoSet()
 {
-	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UAuraAbilitySystemComponent::EffectApplied);
+	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UAuraAbilitySystemComponent::ClientEffectApplied);
 	
 }
 
@@ -16,15 +16,15 @@ void UAuraAbilitySystemComponent::AddCharacterAbilities(const TArray<TSubclassOf
 	for (TSubclassOf<UGameplayAbility> AbilityClass : StartupAbilities)
 	{
 		//FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(AbilityClass, 1);
-		//GiveAbility(AbilitySpec); //Ö»Ó¦ÓÃ²»¼¤»î
-		//GiveAbilityAndActivateOnce(AbilitySpec); //Ó¦ÓÃ¼¼ÄÜ²¢¼¤»îÒ»´Î
+		//GiveAbility(AbilitySpec); //åªåº”ç”¨ä¸æ¿€æ´»
+		//GiveAbilityAndActivateOnce(AbilitySpec); //åº”ç”¨æŠ€èƒ½å¹¶æ¿€æ´»ä¸€æ¬¡
 
 		FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(AbilityClass, 1);
 		if (const UAuraGameplayAbility* AbilityBase = Cast<UAuraGameplayAbility>(AbilitySpec.Ability))
 		{
 			AbilitySpec.DynamicAbilityTags.AddTag(AbilityBase->StartupInputTag);
-			GiveAbility(AbilitySpec); //Ö»Ó¦ÓÃ²»¼¤»î
-			// GiveAbilityAndActivateOnce(AbilitySpec); //Ó¦ÓÃ¼¼ÄÜ²¢¼¤»îÒ»´Î
+			GiveAbility(AbilitySpec); //åªåº”ç”¨ä¸æ¿€æ´»
+			// GiveAbilityAndActivateOnce(AbilitySpec); //åº”ç”¨æŠ€èƒ½å¹¶æ¿€æ´»ä¸€æ¬¡
 		}
 	}
 }
@@ -62,7 +62,7 @@ void UAuraAbilitySystemComponent::AbilityInputTagReleased(const FGameplayTag& In
 
 
 
-void UAuraAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle)
+void UAuraAbilitySystemComponent::ClientEffectApplied_Implementation(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle)
 {
 	//GEngine->AddOnScreenDebugMessage(1, 8.f, FColor::Blue, FString("Effect Applied!"));
 	FGameplayTagContainer TagContainer;

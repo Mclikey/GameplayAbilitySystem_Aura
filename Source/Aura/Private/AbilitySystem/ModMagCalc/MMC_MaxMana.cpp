@@ -7,17 +7,17 @@
 
 UMMC_MaxMana::UMMC_MaxMana()
 {
-	IntelligenceDef.AttributeToCapture = UAuraAttributeSet::GetIntelligenceAttribute();//ÉèÖÃĞèÒª»ñÈ¡µÄÊôĞÔ¶ÔÏó
-	IntelligenceDef.AttributeSource = EGameplayEffectAttributeCaptureSource::Target;//ÉèÖÃÊ°È¡¶ÔÏóÎªGEµÄÓ¦ÓÃÄ¿±ê
+	IntelligenceDef.AttributeToCapture = UAuraAttributeSet::GetIntelligenceAttribute();//è®¾ç½®éœ€è¦è·å–çš„å±æ€§å¯¹è±¡
+	IntelligenceDef.AttributeSource = EGameplayEffectAttributeCaptureSource::Target;//è®¾ç½®æ‹¾å–å¯¹è±¡ä¸ºGEçš„åº”ç”¨ç›®æ ‡
 	IntelligenceDef.bSnapshot = false;
 
-	RelevantAttributesToCapture.Add(IntelligenceDef);//Ìí¼Óµ½²¶»ñÊôĞÔÊıÖµ£¬Ö»ÓĞÌí¼Óµ½ÁĞ±í£¬²Å»áÈ¥»ñÈ¡ÊôĞÔÖµ
+	RelevantAttributesToCapture.Add(IntelligenceDef);//æ·»åŠ åˆ°æ•è·å±æ€§æ•°å€¼ï¼Œåªæœ‰æ·»åŠ åˆ°åˆ—è¡¨ï¼Œæ‰ä¼šå»è·å–å±æ€§å€¼
 }
 
 float UMMC_MaxMana::CalculateBaseMagnitude_Implementation(const FGameplayEffectSpec& Spec) const
 {
 
-	//  ´Ó source ºÍ target »ñÈ¡ Tag
+	//  ä» source å’Œ target è·å– Tag
 	const FGameplayTagContainer* SourceTags = Spec.CapturedSourceTags.GetAggregatedTags();
 	const FGameplayTagContainer* TargetTags = Spec.CapturedTargetTags.GetAggregatedTags();
 
@@ -25,15 +25,15 @@ float UMMC_MaxMana::CalculateBaseMagnitude_Implementation(const FGameplayEffectS
 	EvaluationParameters.SourceTags = SourceTags;
 	EvaluationParameters.TargetTags = TargetTags;
 
-	//»ñÈ¡ÖÇÁ¦Öµ
+	//è·å–æ™ºåŠ›å€¼
 	float Intelligence = 0.f;
 	GetCapturedAttributeMagnitude(IntelligenceDef, Spec, EvaluationParameters, Intelligence);
 	Intelligence = FMath::Max<float>(Intelligence, 0.f);
 
-	//»ñÈ¡µÈ¼¶
+	//è·å–ç­‰çº§
 	ICombatInterface* CombatInterface = Cast<ICombatInterface>(Spec.GetContext().GetSourceObject());
 	const int32 PlayerLevel = CombatInterface->GetPlayerLevel();
 
-	//¼ÆËã×î´óÑªÁ¿
+	//è®¡ç®—æœ€å¤§è¡€é‡
 	return 50.f + Intelligence * 2.5f + PlayerLevel * 15.f;
 }

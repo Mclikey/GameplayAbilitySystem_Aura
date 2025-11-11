@@ -7,17 +7,17 @@
 
 UMMC_MaxHealth::UMMC_MaxHealth()
 {
-	VigorDef.AttributeToCapture = UAuraAttributeSet::GetVigorAttribute();//ÉèÖÃĞèÒª»ñÈ¡µÄÊôĞÔ¶ÔÏó
-	VigorDef.AttributeSource = EGameplayEffectAttributeCaptureSource::Target;//ÉèÖÃÊ°È¡¶ÔÏóÎªGEµÄÓ¦ÓÃÄ¿±ê
+	VigorDef.AttributeToCapture = UAuraAttributeSet::GetVigorAttribute();//è®¾ç½®éœ€è¦è·å–çš„å±æ€§å¯¹è±¡
+	VigorDef.AttributeSource = EGameplayEffectAttributeCaptureSource::Target;//è®¾ç½®æ‹¾å–å¯¹è±¡ä¸ºGEçš„åº”ç”¨ç›®æ ‡
 	VigorDef.bSnapshot = false;
 
-	RelevantAttributesToCapture.Add(VigorDef);//Ìí¼Óµ½²¶»ñÊôĞÔÊıÖµ£¬Ö»ÓĞÌí¼Óµ½ÁĞ±í£¬²Å»áÈ¥»ñÈ¡ÊôĞÔÖµ
+	RelevantAttributesToCapture.Add(VigorDef);//æ·»åŠ åˆ°æ•è·å±æ€§æ•°å€¼ï¼Œåªæœ‰æ·»åŠ åˆ°åˆ—è¡¨ï¼Œæ‰ä¼šå»è·å–å±æ€§å€¼
 }
 
 float UMMC_MaxHealth::CalculateBaseMagnitude_Implementation(const FGameplayEffectSpec& Spec) const
 {
 
-	//  ´Ó source ºÍ target »ñÈ¡ Tag
+	//  ä» source å’Œ target è·å– Tag
 	const FGameplayTagContainer* SourceTags = Spec.CapturedSourceTags.GetAggregatedTags();
 	const FGameplayTagContainer* TargetTags = Spec.CapturedTargetTags.GetAggregatedTags();
 
@@ -25,16 +25,16 @@ float UMMC_MaxHealth::CalculateBaseMagnitude_Implementation(const FGameplayEffec
 	EvaluationParameters.SourceTags = SourceTags;
 	EvaluationParameters.TargetTags = TargetTags;
 
-	//»ñÈ¡ÌåÁ¦Öµ
+	//è·å–ä½“åŠ›å€¼
 	float Vigor = 0.f;
 	GetCapturedAttributeMagnitude(VigorDef, Spec, EvaluationParameters, Vigor);
 	Vigor = FMath::Max<float>(Vigor, 0.f);
 
-	//»ñÈ¡µÈ¼¶
+	//è·å–ç­‰çº§
 	ICombatInterface* CombatInterface = Cast<ICombatInterface>(Spec.GetContext().GetSourceObject());
 	const int32 PlayerLevel = CombatInterface->GetPlayerLevel();
 
-	//¼ÆËã×î´óÑªÁ¿
+	//è®¡ç®—æœ€å¤§è¡€é‡
 	return 80.f + Vigor * 2.5f + PlayerLevel * 10.f;
 }
 

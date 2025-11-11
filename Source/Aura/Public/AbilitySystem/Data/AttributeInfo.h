@@ -13,7 +13,7 @@ struct FAuraAttributeInfo
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) //EditDefaultsOnly标示代表此属性可以通过面板修改内容
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) //EditDefaultsOnly鏍囩ず浠ｈ〃姝ゅ睘鎬у彲浠ラ�氳繃闈㈡澘淇敼鍐呭
 	FGameplayTag AttributeTag = FGameplayTag();
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)

@@ -7,10 +7,10 @@
 
 void UOverlayWidgetController::BroadcastInitivalValues()
 {
-	//½«ÊôĞÔ¼¯×ª»»ÎªAuraÊôĞÔ¼¯²¢ÇÒ¿ÉÒÔ·ÃÎÊÕâĞ©ÊôĞÔ£¬Ê¹ÓÃÊôĞÔ·ÃÎÊÆ÷À´ÉèÖÃ
+	//å°†å±æ€§é›†è½¬æ¢ä¸ºAuraå±æ€§é›†å¹¶ä¸”å¯ä»¥è®¿é—®è¿™äº›å±æ€§ï¼Œä½¿ç”¨å±æ€§è®¿é—®å™¨æ¥è®¾ç½®
 	const UAuraAttributeSet* AuraAttributeSet = CastChecked<UAuraAttributeSet>(AttributeSet);
 
-	//½«³õÊ¼ÊôĞÔÖµ ¹ã²¥¸ø¶©ÔÄÎ¯ÍĞµÄ´úÂë£¬Ï£ÍûÔÚÊôĞÔ·¢Éú±ä»¯Ê±×ö³öÏìÓ¦
+	//å°†åˆå§‹å±æ€§å€¼ å¹¿æ’­ç»™è®¢é˜…å§”æ‰˜çš„ä»£ç ï¼Œå¸Œæœ›åœ¨å±æ€§å‘ç”Ÿå˜åŒ–æ—¶åšå‡ºå“åº”
 	OnHealthChanged.Broadcast(AuraAttributeSet->GetHealth());
 	OnMaxHealthChanged.Broadcast(AuraAttributeSet->GetMaxHealth());
 	OnManaChanged.Broadcast(AuraAttributeSet->GetMana());
@@ -20,7 +20,7 @@ void UOverlayWidgetController::BroadcastInitivalValues()
 
 void UOverlayWidgetController::BindCallbacksToDependencies()
 {
-	//½«ÊôĞÔ¼¯×ª»»ÎªAuraÊôĞÔ¼¯²¢ÇÒ¿ÉÒÔ·ÃÎÊÕâĞ©ÊôĞÔ£¬Ê¹ÓÃÊôĞÔ·ÃÎÊÆ÷À´ÉèÖÃ
+	//å°†å±æ€§é›†è½¬æ¢ä¸ºAuraå±æ€§é›†å¹¶ä¸”å¯ä»¥è®¿é—®è¿™äº›å±æ€§ï¼Œä½¿ç”¨å±æ€§è®¿é—®å™¨æ¥è®¾ç½®
 	const UAuraAttributeSet* AuraAttributeSet = CastChecked<UAuraAttributeSet>(AttributeSet);
 
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
@@ -55,24 +55,24 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 			}
 		);
 
-	//AddLambda °ó¶¨ÄäÃûº¯Êı
+	//AddLambda ç»‘å®šåŒ¿åå‡½æ•°
 	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->EffectAssetTags.AddLambda(
-		[this](const FGameplayTagContainer& AssetTags)//ÖĞÀ¨ºÅÌí¼ÓthisÊÇÎªÁË±£Ö¤ÄÚ²¿ÄÜ¹»»ñÈ¡ÀàµÄ¶ÔÏó
+		[this](const FGameplayTagContainer& AssetTags)//ä¸­æ‹¬å·æ·»åŠ thisæ˜¯ä¸ºäº†ä¿è¯å†…éƒ¨èƒ½å¤Ÿè·å–ç±»çš„å¯¹è±¡
 	{
 		
 		/*
 		* for (const FGameplayTag& Tag : AssetTags)
 		{
-			//½«tag¹ã²¥¸øWidget Controller
-			const FString Msg = FString::Printf(TEXT("GE Tag in Widget Controller: %s"), *Tag.ToString()); //»ñÈ¡Asset Tag
-			GEngine->AddOnScreenDebugMessage(-1, 8.f, FColor::Cyan, Msg); //´òÓ¡µ½ÆÁÄ»ÉÏ -1 ²»»á±»¸²¸Ç
+			//å°†tagå¹¿æ’­ç»™Widget Controller
+			const FString Msg = FString::Printf(TEXT("GE Tag in Widget Controller: %s"), *Tag.ToString()); //è·å–Asset Tag
+			GEngine->AddOnScreenDebugMessage(-1, 8.f, FColor::Cyan, Msg); //æ‰“å°åˆ°å±å¹•ä¸Š -1 ä¸ä¼šè¢«è¦†ç›–
 		}
 		*/
 
 		for (const FGameplayTag& Tag : AssetTags)
 		{
 
-			//¶Ô±êÇ©½øĞĞ¼ì²â£¬Èç¹û²»ÊÇĞÅÏ¢±êÇ©£¬½«ÎŞ·¨½øĞĞ¹ã²¥
+			//å¯¹æ ‡ç­¾è¿›è¡Œæ£€æµ‹ï¼Œå¦‚æœä¸æ˜¯ä¿¡æ¯æ ‡ç­¾ï¼Œå°†æ— æ³•è¿›è¡Œå¹¿æ’­
 			FGameplayTag MessageTag = FGameplayTag::RequestGameplayTag(FName("Message"));
 			// "A.1".MatchesTag("A") will return True, "A".MatchesTag("A.1") will return False
 			if (Tag.MatchesTag(MessageTag))
@@ -80,7 +80,7 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 				FUIWidgetRow* Row = GetDataTableRowByTag<FUIWidgetRow>(MessageWidgetDataTable, Tag);
 				if (Row)
 				{
-					MessageWidgetRowDelegate.Broadcast(*Row); //Ç°Ãæ¼Ó*È¡ÏûÖ¸ÕëÒıÓÃ
+					MessageWidgetRowDelegate.Broadcast(*Row); //å‰é¢åŠ *å–æ¶ˆæŒ‡é’ˆå¼•ç”¨
 				}
 			}
 		}

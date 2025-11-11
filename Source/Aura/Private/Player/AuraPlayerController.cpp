@@ -3,9 +3,9 @@
 
 #include "Player/AuraPlayerController.h"
 
-#include "InputActionValue.h" //ÊäÈëÓ³ÉäValueÖµµÄÍ·ÎÄ¼ş
-#include "EnhancedInputComponent.h" //ÔöÇ¿Ó³ÉäµÄÍ·ÎÄ¼ş
-#include "EnhancedInputSubsystems.h" //ÔöÇ¿×ÓÏµÍ³µÄÍ·ÎÄ¼ş
+#include "InputActionValue.h" //è¾“å…¥æ˜ å°„Valueå€¼çš„å¤´æ–‡ä»¶
+#include "EnhancedInputComponent.h" //å¢å¼ºæ˜ å°„çš„å¤´æ–‡ä»¶
+#include "EnhancedInputSubsystems.h" //å¢å¼ºå­ç³»ç»Ÿçš„å¤´æ–‡ä»¶
 #include "EnhancedInputLibrary.h"
 #include "interaction/EnemyInterface.h"
 #include "Input/AuraInputComponent.h"
@@ -18,7 +18,7 @@
 
 AAuraPlayerController::AAuraPlayerController()
 {
-	bReplicates = true;//ÊÇ·ñ½«Êı¾İ´«ËÍ·şÎñÆ÷¸üĞÂ
+	bReplicates = true;//æ˜¯å¦å°†æ•°æ®ä¼ é€æœåŠ¡å™¨æ›´æ–°
 
 	LastActor = nullptr;
 	ThisActor = nullptr;
@@ -30,10 +30,10 @@ void AAuraPlayerController::PlayerTick(float DeltaTime)
 {
 	Super::PlayerTick(DeltaTime);
 
-	//Êó±êÎ»ÖÃ×·×ÙÊÇ·ñĞüÍ£ÔÚµĞÈËÉíÉÏ
+	//é¼ æ ‡ä½ç½®è¿½è¸ªæ˜¯å¦æ‚¬åœåœ¨æ•Œäººèº«ä¸Š
 	CursorTrace();
 
-	//×Ô¶¯Ñ°Â·
+	//è‡ªåŠ¨å¯»è·¯
 	AutoRun();
 }
 
@@ -42,9 +42,9 @@ void AAuraPlayerController::AutoRun()
 	if (!bAutoRunning) return;
 	if (APawn* ControlledPawn = GetPawn())
 	{
-		//ÕÒµ½¾àÀëÑùÌõ×î½üµÄÎ»ÖÃ
+		//æ‰¾åˆ°è·ç¦»æ ·æ¡æœ€è¿‘çš„ä½ç½®
 		const FVector LocationOnSpline = Spline->FindLocationClosestToWorldLocation(ControlledPawn->GetActorLocation(), ESplineCoordinateSpace::World);
-		//»ñÈ¡Õâ¸öÎ»ÖÃÔÚÑùÌõÉÏµÄ·½Ïò
+		//è·å–è¿™ä¸ªä½ç½®åœ¨æ ·æ¡ä¸Šçš„æ–¹å‘
 		const FVector Direction = Spline->FindDirectionClosestToWorldLocation(LocationOnSpline, ESplineCoordinateSpace::World);
 		ControlledPawn->AddMovementInput(Direction);
 
@@ -60,38 +60,18 @@ void AAuraPlayerController::AutoRun()
 void AAuraPlayerController::CursorTrace()
 {
 
-	//FHitResult ½á¹¹À´´æ´¢Åö×²¼ì²âºóµÄÏà¹ØÊı¾İ, ÔÚ´Ë¼òµ¥¼ÇÂ¼Ò»ÏÂ¸Ã½á¹¹ÖĞ¸÷¸ö³ÉÔ±µÄº¬Òå.
-	FHitResult CursorHit;
+	GetHitResultUnderCursor(ECC_Visibility, false, CursorHit); //è·å–å¯è§†çš„é¼ æ ‡å‘½ä¸­ç»“æœ
+	if (!CursorHit.bBlockingHit) return; //å¦‚æœæœªå‘½ä¸­ç›´æ¥è¿”å›
 
-	GetHitResultUnderCursor(ECC_Visibility, false, CursorHit);//»ñÈ¡¿ÉÊÓµÄÊó±êÃüÖĞ½á¹û
-	if (!CursorHit.bBlockingHit) return;//Èç¹ûÎ´ÃüÖĞÖ±½Ó·µ»Ø
-	
 	LastActor = ThisActor;
 	ThisActor = Cast<IEnemyInterface>(CursorHit.GetActor());
 
-	if (LastActor == nullptr)
+	if (ThisActor != LastActor)
 	{
-		if (ThisActor != nullptr)
-		{
-			ThisActor->HighlightActor();
-		}
+		if (ThisActor) ThisActor->HighlightActor();
+		if (LastActor) LastActor->UnHighlightActor();
 	}
-	else
-	{
-		if (ThisActor == nullptr)
-		{
-			LastActor->UnHighlightActor();
-		}
-		else
-		{
-			if (ThisActor != LastActor)
-			{
-				LastActor->UnHighlightActor();
-				ThisActor->HighlightActor();
-			}
-		}
-	}
-	
+
 }
 
 void AAuraPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
@@ -100,7 +80,7 @@ void AAuraPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 	{
 		bTargeting = ThisActor ? true : false;
 		bAutoRunning = false;
-		FollowTime = 0.f; //ÖØÖÃÍ³¼ÆµÄÊ±¼ä
+		FollowTime = 0.f; //é‡ç½®ç»Ÿè®¡çš„æ—¶é—´
 	}
 	
 
@@ -127,28 +107,25 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 	}
 	else
 	{
-		APawn* ControlledPawn = GetPawn();
+		const APawn* ControlledPawn = GetPawn();
 		if (FollowTime <= ShortPressThreshold && ControlledPawn)
 		{
 			
 			if (UNavigationPath* NavPath = UNavigationSystemV1::FindPathToLocationSynchronously(this, ControlledPawn->GetActorLocation(), CachedDestination))
 			{
-				Spline->ClearSplinePoints(); //Çå³ıÑùÌõÄÚÏÖÓĞµÄµã
+				Spline->ClearSplinePoints(); //æ¸…é™¤æ ·æ¡å†…ç°æœ‰çš„ç‚¹
 
-				const TArray<FVector>& PathPoints = NavPath->PathPoints;  // ĞŞ¸ÄÕâÀï
+				const TArray<FVector>& PathPoints = NavPath->PathPoints;  // ä¿®æ”¹è¿™é‡Œ
 				for (const FVector& PointLoc : PathPoints)
 				{
-					Spline->AddSplinePoint(PointLoc, ESplineCoordinateSpace::World); //½«ĞÂµÄÎ»ÖÃÌí¼Óµ½ÑùÌõÇúÏßÖĞ
-					//DrawDebugSphere(GetWorld(), PointLoc, 8.f, 8, FColor::Orange, false, 5.f); //µã»÷ºódebugµ÷ÊÔ
+					Spline->AddSplinePoint(PointLoc, ESplineCoordinateSpace::World); //å°†æ–°çš„ä½ç½®æ·»åŠ åˆ°æ ·æ¡æ›²çº¿ä¸­
+					//DrawDebugSphere(GetWorld(), PointLoc, 8.f, 8, FColor::Orange, false, 5.f); //ç‚¹å‡»ådebugè°ƒè¯•
 				}
 
-				//×Ô¶¯Ñ°Â·½«×îÖÕÄ¿µÄµØÉèÖÃÎªµ¼º½µÄÖÕµã£¬·½±ãÍ£Ö¹µ¼º½
+				//è‡ªåŠ¨å¯»è·¯å°†æœ€ç»ˆç›®çš„åœ°è®¾ç½®ä¸ºå¯¼èˆªçš„ç»ˆç‚¹ï¼Œæ–¹ä¾¿åœæ­¢å¯¼èˆª
 				CachedDestination = NavPath->PathPoints[NavPath->PathPoints.Num() - 1];
-				bAutoRunning = true; //ÉèÖÃµ±Ç°Õı³£×Ô¶¯Ñ°Â·×´Ì¬£¬½«ÔÚtickÖĞ¸üĞÂÎ»ÖÃ
+				bAutoRunning = true; //è®¾ç½®å½“å‰æ­£å¸¸è‡ªåŠ¨å¯»è·¯çŠ¶æ€ï¼Œå°†åœ¨tickä¸­æ›´æ–°ä½ç½®
 			}
-			
-			FollowTime = 0.f;
-			bTargeting = false;
 		}
 	}
 
@@ -176,11 +153,11 @@ void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 	}
 	else 
 	{
-		FollowTime += GetWorld()->GetDeltaSeconds(); //Í³¼ÆĞüÍ£Ê±¼äÀ´ÅĞ¶ÏÊÇ·ñÎªµã»÷
-		FHitResult Hit;
-		if (GetHitResultUnderCursor(ECC_Visibility, false, Hit))
+		FollowTime += GetWorld()->GetDeltaSeconds(); //ç»Ÿè®¡æ‚¬åœæ—¶é—´æ¥åˆ¤æ–­æ˜¯å¦ä¸ºç‚¹å‡»
+		
+		if (CursorHit.bBlockingHit)
 		{
-			CachedDestination = Hit.ImpactPoint;
+			CachedDestination = CursorHit.ImpactPoint;
 		}
 
 		if (APawn* ControlledPawn = GetPawn())
@@ -208,28 +185,28 @@ void AAuraPlayerController::BeginPlay()
 	Super::BeginPlay();
 	check(AuraContext);
 
-	//´Ó±¾µØ½ÇÉ«ÉíÉÏ»ñÈ¡µ½ËüµÄ×ÓÏµÍ³
+	//ä»æœ¬åœ°è§’è‰²èº«ä¸Šè·å–åˆ°å®ƒçš„å­ç³»ç»Ÿ
 	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
 	if (Subsystem)
 	{
-		//½«×Ô¶¨ÒåµÄ²Ù×÷Ó³ÉäÉÏÏÂÎÄÌí¼Óµ½×ÓÏµÍ³ÖĞ
-		Subsystem->AddMappingContext(AuraContext, 0);//¿ÉÒÔ´æÔÚ¶à¸ö²Ù×÷Ó³Éä£¬¸ù¾İÓÅÏÈ¼¶´¥·¢
+		//å°†è‡ªå®šä¹‰çš„æ“ä½œæ˜ å°„ä¸Šä¸‹æ–‡æ·»åŠ åˆ°å­ç³»ç»Ÿä¸­
+		Subsystem->AddMappingContext(AuraContext, 0);//å¯ä»¥å­˜åœ¨å¤šä¸ªæ“ä½œæ˜ å°„ï¼Œæ ¹æ®ä¼˜å…ˆçº§è§¦å‘
 	}
 
-	bShowMouseCursor = true;//ÓÎÏ·ÖĞÊÇ·ñÏÔÊ¾Êó±ê¹â±ê
-	DefaultMouseCursor = EMouseCursor::Default;//Êó±ê¹â±êµÄÑùÊ½
+	bShowMouseCursor = true;//æ¸¸æˆä¸­æ˜¯å¦æ˜¾ç¤ºé¼ æ ‡å…‰æ ‡
+	DefaultMouseCursor = EMouseCursor::Default;//é¼ æ ‡å…‰æ ‡çš„æ ·å¼
 
 	FInputModeGameAndUI InputModeData;
-	InputModeData.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);//½«Êó±êËø¶¨ÔÚÊÓ¿ÚÄÚ
-	InputModeData.SetHideCursorDuringCapture(false);//Êó±ê±»²¶»ñÊ±ÊÇ·ñÒş²Ø
-	SetInputMode(InputModeData);//ÉèÖÃ¸ø¿ØÖÆÆ÷
+	InputModeData.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);//å°†é¼ æ ‡é”å®šåœ¨è§†å£å†…
+	InputModeData.SetHideCursorDuringCapture(false);//é¼ æ ‡è¢«æ•è·æ—¶æ˜¯å¦éšè—
+	SetInputMode(InputModeData);//è®¾ç½®ç»™æ§åˆ¶å™¨
 }
 
 void AAuraPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 
-	UAuraInputComponent* AuraInputComponent = CastChecked<UAuraInputComponent>(InputComponent);//»ñÈ¡µ½ÔöÇ¿ÊäÈë×é¼ş
+	UAuraInputComponent* AuraInputComponent = CastChecked<UAuraInputComponent>(InputComponent);//è·å–åˆ°å¢å¼ºè¾“å…¥ç»„ä»¶
 
 	AuraInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AAuraPlayerController::Move);
 	AuraInputComponent->BindAbilityActions(InputConfig, this, &ThisClass::AbilityInputTagPressed, &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
@@ -239,12 +216,12 @@ void AAuraPlayerController::SetupInputComponent()
 
 void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 {
-	const FVector2D InputAxisVector = InputActionValue.Get<FVector2D>();//»ñÈ¡ÊäÈë²Ù×÷µÄ2Î¬ÏòÁ¿Öµ
-	const FRotator Rotation = GetControlRotation(); //»ñÈ¡¿ØÖÆÆ÷Ğı×ª
-	const FRotator YawRotation(0.f, Rotation.Yaw, 0.f);//Í¨¹ı¿ØÖÆÆ÷µÄ´¹Ö±³¯Ïò´´½¨Ò»¸öĞı×ªÖµ£¬ºöÂÔÉÏÏÂ³¯ÏòºÍ×óÓÒ³¯Ïò
+	const FVector2D InputAxisVector = InputActionValue.Get<FVector2D>();//è·å–è¾“å…¥æ“ä½œçš„2ç»´å‘é‡å€¼
+	const FRotator Rotation = GetControlRotation(); //è·å–æ§åˆ¶å™¨æ—‹è½¬
+	const FRotator YawRotation(0.f, Rotation.Yaw, 0.f);//é€šè¿‡æ§åˆ¶å™¨çš„å‚ç›´æœå‘åˆ›å»ºä¸€ä¸ªæ—‹è½¬å€¼ï¼Œå¿½ç•¥ä¸Šä¸‹æœå‘å’Œå·¦å³æœå‘
 
-	const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);//»ñÈ¡ÊÀ½ç×ø±êÏµÏÂÏòÇ°µÄÖµ£¬-1µ½1
-	const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);//»ñÈ¡ÊÀ½ç×ø±êÏµÏÂÏòÓÒµÄÖµ£¬-1µ½1
+	const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);//è·å–ä¸–ç•Œåæ ‡ç³»ä¸‹å‘å‰çš„å€¼ï¼Œ-1åˆ°1
+	const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);//è·å–ä¸–ç•Œåæ ‡ç³»ä¸‹å‘å³çš„å€¼ï¼Œ-1åˆ°1
 
 	if (APawn* ControlledPawn = GetPawn<APawn>())
 	{

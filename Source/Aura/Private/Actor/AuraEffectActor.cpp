@@ -27,25 +27,25 @@ void AAuraEffectActor::BeginPlay()
 void AAuraEffectActor::AppleEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass)
 {
 
-	//Õâ¸öº¯ÊýÊÇ¹¤¾ß¿â,¿ÉÒÔ»ñÈ¡ÊµÏÖÁËIAbilitySystem½Ó¿ÚµÄActorµÄAbilitySystem
+	//è¿™ä¸ªå‡½æ•°æ˜¯å·¥å…·åº“,å¯ä»¥èŽ·å–å®žçŽ°äº†IAbilitySystemæŽ¥å£çš„Actorçš„AbilitySystem
 	UAbilitySystemComponent* TargetASC =  UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
 	if (TargetASC == nullptr) return;
 
 	check(GameplayEffectClass);
 
-	//»ñÈ¡ASCµÄEffectContext
+	//èŽ·å–ASCçš„EffectContext
 	FGameplayEffectContextHandle EffectContextHandle =  TargetASC->MakeEffectContext();
-	//ÎªContextHandleÌí¼ÓÔ´£¨¾ÍÊÇÕâ¸öÐ§¹ûµÄÌí¼ÓÕß£©
+	//ä¸ºContextHandleæ·»åŠ æºï¼ˆå°±æ˜¯è¿™ä¸ªæ•ˆæžœçš„æ·»åŠ è€…ï¼‰
 	EffectContextHandle.AddSourceObject(this);
 
-	//ÖÆ×÷Ò»¸öSpec
+	//åˆ¶ä½œä¸€ä¸ªSpec
 	const FGameplayEffectSpecHandle EffectSpecHandle =  TargetASC->MakeOutgoingSpec(GameplayEffectClass, ActorLevel, EffectContextHandle);
-	//ÎªTargetÌí¼ÓÐ§¹û,È»ºó»ñÈ¡FActiveGameplayEffectHandle 
+	//ä¸ºTargetæ·»åŠ æ•ˆæžœ,ç„¶åŽèŽ·å–FActiveGameplayEffectHandle 
 	FActiveGameplayEffectHandle ActiveEffectHandle =   TargetASC->ApplyGameplayEffectSpecToSelf(*EffectSpecHandle.Data.Get());
 
 
-	//Èç¹ûÕâ¸öEffectÎªÎÞÏÞÊ±³¤µÄÀà,ÇÒµ±Ç°ÎÞÏÞÊ±³¤ÀàµÄpolicyÎªRemovedOnEndOverlap,
-	//ÔòÐèÒª´æ´¢ActiveEffectHandle,ÒÔ±ãºóÐøÉ¾³ý
+	//å¦‚æžœè¿™ä¸ªEffectä¸ºæ— é™æ—¶é•¿çš„ç±»,ä¸”å½“å‰æ— é™æ—¶é•¿ç±»çš„policyä¸ºRemovedOnEndOverlap,
+	//åˆ™éœ€è¦å­˜å‚¨ActiveEffectHandle,ä»¥ä¾¿åŽç»­åˆ é™¤
 	bool bIsInfinite = false;
 	if (EffectSpecHandle.Data->Def.Get()->DurationPolicy == EGameplayEffectDurationType::Infinite)
 	{
@@ -93,7 +93,7 @@ void AAuraEffectActor::OnEndOverlap(AActor* TargetActor)
 
 	if (InfiniteEffectRemovalPolicy == EEffectRemovalPolicy::RemoveOnEndOverlap)
 	{
-		//È¥³ýInfiniteEffect
+		//åŽ»é™¤InfiniteEffect
 		UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
 		TArray<FActiveGameplayEffectHandle> RemovedKeys;
 		for (TTuple<FActiveGameplayEffectHandle, UAbilitySystemComponent*>& Tuple : ActiveEffectHandles)

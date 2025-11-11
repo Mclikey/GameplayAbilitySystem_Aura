@@ -6,7 +6,7 @@
 void UAuraUserWidget::SetWidgetController(UObject* InWidgetController)
 {
 	WidgetController = InWidgetController;
-	//»Øµ÷µ½À¶Í¼¼àÌı
+	//å›è°ƒåˆ°è“å›¾ç›‘å¬
 	WidgetControllerSet();
 }
 

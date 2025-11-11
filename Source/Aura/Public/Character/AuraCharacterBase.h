@@ -21,7 +21,7 @@ class AURA_API AAuraCharacterBase : public ACharacter,public IAbilitySystemInter
 public:
 	AAuraCharacterBase();
 
-	//ÖØĞ´GetAbilitySystemComponent()
+	//é‡å†™GetAbilitySystemComponent()
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
 	virtual void InitAbilityActorInfo();
@@ -58,6 +58,6 @@ protected:
 private:
 
 	UPROPERTY(EditAnywhere, Category = "Abilities")
-	TArray<TSubclassOf<UGameplayAbility>> StartupAbilities; //½ÇÉ«³õÊ¼¼¼ÄÜÉèÖÃ
+	TArray<TSubclassOf<UGameplayAbility>> StartupAbilities; //è§’è‰²åˆå§‹æŠ€èƒ½è®¾ç½®
 
 };

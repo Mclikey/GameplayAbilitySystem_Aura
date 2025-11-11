@@ -8,16 +8,16 @@
 
 AAuraPlayerState::AAuraPlayerState()
 {
-	//³õÊ¼»¯Íæ¼ÒÀàµÄAbilitySystemComponent
+	//åˆå§‹åŒ–ç©å®¶ç±»çš„AbilitySystemComponent
 	AbilitySystemComponent = CreateDefaultSubobject<UAuraAbilitySystemComponent>("AbilitySystemComponent");
-	//¿ªÆô·şÎñ¶Ë¸´ÖÆ£¬½«¸Ã×é¼şµÄ×´Ì¬ºÍĞĞÎªÔÚÍøÂç»·¾³ÏÂ´Ó·şÎñÆ÷Í¬²½µ½¿Í»§¶Ë
+	//å¼€å¯æœåŠ¡ç«¯å¤åˆ¶ï¼Œå°†è¯¥ç»„ä»¶çš„çŠ¶æ€å’Œè¡Œä¸ºåœ¨ç½‘ç»œç¯å¢ƒä¸‹ä»æœåŠ¡å™¨åŒæ­¥åˆ°å®¢æˆ·ç«¯
 	AbilitySystemComponent->SetIsReplicated(true);
-	//Éè·şÎñ¶Ë¸´ÖÆ·½·¨- Mixed(ÊÊºÏÖ÷½Ç)
+	//è®¾æœåŠ¡ç«¯å¤åˆ¶æ–¹æ³•- Mixed(é€‚åˆä¸»è§’)
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 
 	AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSet");
 
-	//·şÎñÆ÷¸üĞÂ¿Í»§¶ËµÄÆµÂÊ
+	//æœåŠ¡å™¨æ›´æ–°å®¢æˆ·ç«¯çš„é¢‘ç‡
 	NetUpdateFrequency = 100.f;
 
 }

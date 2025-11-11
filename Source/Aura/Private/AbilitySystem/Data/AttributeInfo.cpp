@@ -7,18 +7,18 @@ FAuraAttributeInfo UAttributeInfo::FindAttributeInfoForTag(const FGameplayTag& A
 {
 	for (const FAuraAttributeInfo& Info : AttributeInformation)
 	{
-		//判断标签是否完全匹配
+		//鍒ゆ柇鏍囩鏄惁瀹屽叏鍖归厤
 		if (Info.AttributeTag.MatchesTagExact(AttributeTag))
 		{
 			return Info;
 		}
 	}
 
-	//未查询到是否打印
+	//鏈煡璇㈠埌鏄惁鎵撳嵃
 	if (bLogNotFound)
 	{
-		UE_LOG(LogTemp, Error, TEXT("无法从数据列表[%s]中查找到对应的AttributeTag[%s]"), *GetNameSafe(this), *AttributeTag.ToString());
+		UE_LOG(LogTemp, Error, TEXT("鏃犳硶浠庢暟鎹垪琛╗%s]涓煡鎵惧埌瀵瑰簲鐨凙ttributeTag[%s]"), *GetNameSafe(this), *AttributeTag.ToString());
 	}
 
-    return FAuraAttributeInfo();
+	return FAuraAttributeInfo();
 }

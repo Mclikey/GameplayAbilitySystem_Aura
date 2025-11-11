@@ -17,7 +17,7 @@ class AURA_API UAuraAbilitySystemLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	//BlueprintPure ÎªÈ¥µôÔÚÀ¶Í¼ÄÚÊ¹ÓÃÊ±µÄÖ´ĞĞ½Ó¿Ú£¬ÕâÑù£¬ÎÒÃÇ²»ĞèÒªµ÷ÓÃ£¬Ò²¿ÉÒÔÖ±½Ó´Ó½Úµã»ñÈ¡·µ»Ø(Ö»ÒªÖ´ĞĞÄ³ÖÖ²Ù×÷²¢·µ»Ø½á¹û)
+	//BlueprintPure ä¸ºå»æ‰åœ¨è“å›¾å†…ä½¿ç”¨æ—¶çš„æ‰§è¡Œæ¥å£ï¼Œè¿™æ ·ï¼Œæˆ‘ä»¬ä¸éœ€è¦è°ƒç”¨ï¼Œä¹Ÿå¯ä»¥ç›´æ¥ä»èŠ‚ç‚¹è·å–è¿”å›(åªè¦æ‰§è¡ŒæŸç§æ“ä½œå¹¶è¿”å›ç»“æœ)
 	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|WidgetController")
 	static UOverlayWidgetController* GetOverlayWidgetController(const UObject* WorldContextObject);
 

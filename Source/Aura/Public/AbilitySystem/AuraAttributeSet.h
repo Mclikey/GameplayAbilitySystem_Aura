@@ -8,14 +8,14 @@
 #include "AuraAttributeSet.generated.h"
 
 
-//ÄÜ¹»ÔÚPostGameplayEffectExecuteÖĞ»ñÈ¡µ½µÄĞÅÏ¢£¬·Åµ½Ò»¸ö½á¹¹ÌåÖĞ·½±ã»ñÈ¡
+//èƒ½å¤Ÿåœ¨PostGameplayEffectExecuteä¸­è·å–åˆ°çš„ä¿¡æ¯ï¼Œæ”¾åˆ°ä¸€ä¸ªç»“æ„ä½“ä¸­æ–¹ä¾¿è·å–
 USTRUCT()
 struct FEffectProperties
 {
 	GENERATED_BODY()
 	FEffectProperties() {}
 	FGameplayEffectContextHandle EffectContextHandle;
-	//Source ´ú±íÕâ¸öEffectÊÇ´ÓÄÄ¸öActorÊÍ·ÅµÄ,Target´ú±í×ÔÉí(ÓµÓĞ¸ÃAttributeSetµÄ½ÇÉ«)
+	//Source ä»£è¡¨è¿™ä¸ªEffectæ˜¯ä»å“ªä¸ªActoré‡Šæ”¾çš„,Targetä»£è¡¨è‡ªèº«(æ‹¥æœ‰è¯¥AttributeSetçš„è§’è‰²)
 
 	UPROPERTY()
 	UAbilitySystemComponent* SourceASC = nullptr;
@@ -58,24 +58,24 @@ class AURA_API UAuraAttributeSet : public UAttributeSet
 
 public:
 
-	//ÊôĞÔ·ÃÎÊÆ÷ÓĞ4ÖÖ£º 
-	// »ñÈ¡ÊôĞÔ£¨GAMEPLAYATTRIBUTE_PROPERTY_GETTER£©¡¢ 
-	// »ñÈ¡ÊôĞÔÖµ£¨GAMEPLAYATTRIBUTE_PROPERTY_VALUE_GETTER£©¡¢ 
-	// ³õÊ¼»¯Öµ£¨GAMEPLAYATTRIBUTE_PROPERTY_VALUE_INITTER£©¡¢ 
-	// ĞŞ¸ÄÊôĞÔÖµ£¨GAMEPLAYATTRIBUTE_PROPERTY_VALUE_SETTER£©
+	//å±æ€§è®¿é—®å™¨æœ‰4ç§ï¼š 
+	// è·å–å±æ€§ï¼ˆGAMEPLAYATTRIBUTE_PROPERTY_GETTERï¼‰ã€ 
+	// è·å–å±æ€§å€¼ï¼ˆGAMEPLAYATTRIBUTE_PROPERTY_VALUE_GETTERï¼‰ã€ 
+	// åˆå§‹åŒ–å€¼ï¼ˆGAMEPLAYATTRIBUTE_PROPERTY_VALUE_INITTERï¼‰ã€ 
+	// ä¿®æ”¹å±æ€§å€¼ï¼ˆGAMEPLAYATTRIBUTE_PROPERTY_VALUE_SETTERï¼‰
 
 	UAuraAttributeSet();
 
-	//Ö¸¶¨ÄÇĞ©ÊôĞÔĞèÒªÔÚ·şÎñÆ÷ºÍ¿Í»§¶ËÖ®¼äÍ¬²½£¬²¢¶¨ÒåÃ¿¸öÊôĞÔµÄ¸´ÖÆÌõ¼ş£¨Replication Condition£©
+	//æŒ‡å®šé‚£äº›å±æ€§éœ€è¦åœ¨æœåŠ¡å™¨å’Œå®¢æˆ·ç«¯ä¹‹é—´åŒæ­¥ï¼Œå¹¶å®šä¹‰æ¯ä¸ªå±æ€§çš„å¤åˆ¶æ¡ä»¶ï¼ˆReplication Conditionï¼‰
 	virtual void GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifetimeProps) const override;
 
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
 
-	//ÔÚGameplayEffect±»Ìí¼ÓÊ±µÄ»Øµ÷
+	//åœ¨GameplayEffectè¢«æ·»åŠ æ—¶çš„å›è°ƒ
 	virtual void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data) override;
 
 
-	//¸øASÌí¼ÓÒ»¸ö±äÁ¿ÊôĞÔ£¬ÀàĞÍÎªMap£¬keyÎªTag±êÇ©£¬ValueÎª¶ÔÓ¦µÄÎ¯ÍĞ,
+	//ç»™ASæ·»åŠ ä¸€ä¸ªå˜é‡å±æ€§ï¼Œç±»å‹ä¸ºMapï¼Œkeyä¸ºTagæ ‡ç­¾ï¼ŒValueä¸ºå¯¹åº”çš„å§”æ‰˜,
 	TMap<FGameplayTag, TStaticFuncPtr<FGameplayAttribute()>> TagsToAttributes;
 
 
@@ -84,7 +84,7 @@ public:
 	*/
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Strength, Category = "Primary Attributrs")
 	FGameplayAttributeData Strength;
-	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Strength);//×Ô¶¯Éú³É¶ÔÓ¦µÄºê
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Strength);//è‡ªåŠ¨ç”Ÿæˆå¯¹åº”çš„å®
 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Intelligence, Category = "Primary Attributrs")
 	FGameplayAttributeData Intelligence;
@@ -102,16 +102,16 @@ public:
 	/*
 		Secondary Attributes
 
-		Armor ·ÀÓù£¬»ùÓÚResilience ÈÍĞÔÊôĞÔ¼ÆËã£¬ ½µµÍËùÊÜÉËº¦
-		ArmorPenetration »¤¼×´©Í¸£¬»ùÓÚResilience ÈÍĞÔÊôĞÔ¼ÆËã£¬½µµÍµĞÈËµÄ·ÀÓù£¬Ôö¼Ó±©»÷ÂÊ
-		BlockChance ¸ñµ²ÂÊ £¬»ùÓÚArmor ·ÀÓùÊôĞÔ¼ÆËã£¬Ôö¼Ó¸ñµ²ÉËº¦¸ÅÂÊ£¬´¥·¢Ê±£¬½µµÍÒ»°ëËùÊÜÉËº¦
-		CriticalHitChance ±©»÷ÂÊ£¬»ùÓÚArmorPenetration »¤¼×´©Í¸ÊôĞÔ¼ÆËã£¬Ôö¼Ó´¥·¢±©»÷ÉËº¦µÄ¸ÅÂÊ
-		CriticalHitDamage ±©»÷ÉËº¦£¬»ùÓÚArmorPenetration »¤¼×´©Í¸ÊôĞÔ¼ÆËã£¬´¥·¢±©»÷Ê±»ùÓÚÔö¼ÓµÄÉËº¦Á¿
-		CriticalHitResistance ±©»÷µÖ¿¹£¬»ùÓÚArmor ·ÀÓùÊôĞÔ¼ÆËã£¬½µµÍµĞÈËµÄ±©»÷¸ÅÂÊ
-		HealthRegeneration ÑªÁ¿×Ô¶¯»Ö¸´£¬»ùÓÚVigor ÌåÁ¦ÊôĞÔ¼ÆËã£¬Ã¿Ãë×Ô¶¯»Ö¸´Ò»¶¨ÑªÁ¿
-		ManaRegeneration À¶Á¿×Ô¶¯»Ö¸´£¬»ùÓÚIntelligence ÖÇÁ¦ÊôĞÔ£¬Ã¿Ãë×Ô¶¯»Ö¸´À¶Á¿
-		MaxHealth ÑªÁ¿ÉÏÏŞ£¬»ùÓÚVigor ÌåÁ¦ÊôĞÔ¼ÆËã
-		MaxMana À¶Á¿ÉÏÏŞ£¬»ùÓÚIntelligence ÖÇÁ¦ÊôĞÔ
+		Armor é˜²å¾¡ï¼ŒåŸºäºResilience éŸ§æ€§å±æ€§è®¡ç®—ï¼Œ é™ä½æ‰€å—ä¼¤å®³
+		ArmorPenetration æŠ¤ç”²ç©¿é€ï¼ŒåŸºäºResilience éŸ§æ€§å±æ€§è®¡ç®—ï¼Œé™ä½æ•Œäººçš„é˜²å¾¡ï¼Œå¢åŠ æš´å‡»ç‡
+		BlockChance æ ¼æŒ¡ç‡ ï¼ŒåŸºäºArmor é˜²å¾¡å±æ€§è®¡ç®—ï¼Œå¢åŠ æ ¼æŒ¡ä¼¤å®³æ¦‚ç‡ï¼Œè§¦å‘æ—¶ï¼Œé™ä½ä¸€åŠæ‰€å—ä¼¤å®³
+		CriticalHitChance æš´å‡»ç‡ï¼ŒåŸºäºArmorPenetration æŠ¤ç”²ç©¿é€å±æ€§è®¡ç®—ï¼Œå¢åŠ è§¦å‘æš´å‡»ä¼¤å®³çš„æ¦‚ç‡
+		CriticalHitDamage æš´å‡»ä¼¤å®³ï¼ŒåŸºäºArmorPenetration æŠ¤ç”²ç©¿é€å±æ€§è®¡ç®—ï¼Œè§¦å‘æš´å‡»æ—¶åŸºäºå¢åŠ çš„ä¼¤å®³é‡
+		CriticalHitResistance æš´å‡»æŠµæŠ—ï¼ŒåŸºäºArmor é˜²å¾¡å±æ€§è®¡ç®—ï¼Œé™ä½æ•Œäººçš„æš´å‡»æ¦‚ç‡
+		HealthRegeneration è¡€é‡è‡ªåŠ¨æ¢å¤ï¼ŒåŸºäºVigor ä½“åŠ›å±æ€§è®¡ç®—ï¼Œæ¯ç§’è‡ªåŠ¨æ¢å¤ä¸€å®šè¡€é‡
+		ManaRegeneration è“é‡è‡ªåŠ¨æ¢å¤ï¼ŒåŸºäºIntelligence æ™ºåŠ›å±æ€§ï¼Œæ¯ç§’è‡ªåŠ¨æ¢å¤è“é‡
+		MaxHealth è¡€é‡ä¸Šé™ï¼ŒåŸºäºVigor ä½“åŠ›å±æ€§è®¡ç®—
+		MaxMana è“é‡ä¸Šé™ï¼ŒåŸºäºIntelligence æ™ºåŠ›å±æ€§
 
 	*/
 
@@ -160,12 +160,12 @@ public:
 		Vital Attributes
 	*/
 	
-	//ÉúÃüÖµ
-	//ReplicatedUsingÎªµ±·şÎñ¶ËĞŞ¸ÄHealthÊıÖµÊÇµÄ»Øµ÷£¬ÓµÓĞReplicatedÊôĞÔÊ±£¬ÆäÖµ»á´Ó·şÎñÆ÷×Ô¶¯¸´ÖÆµ½¿Í»§¶Ë
+	//ç”Ÿå‘½å€¼
+	//ReplicatedUsingä¸ºå½“æœåŠ¡ç«¯ä¿®æ”¹Healthæ•°å€¼æ˜¯çš„å›è°ƒï¼Œæ‹¥æœ‰Replicatedå±æ€§æ—¶ï¼Œå…¶å€¼ä¼šä»æœåŠ¡å™¨è‡ªåŠ¨å¤åˆ¶åˆ°å®¢æˆ·ç«¯
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Health, Category = "Vital Attributrs")
 	FGameplayAttributeData Health;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Health);
-	//·¨Á¦Öµ
+	//æ³•åŠ›å€¼
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Mana, Category = "Vital Attributrs")
 	FGameplayAttributeData Mana;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Mana);
@@ -220,7 +220,7 @@ public:
 	void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const;
 
 private:
-	//´ÓPostGameplayEffectExecuteµÄDataÖĞ»ñÈ¡ËùÓĞµÄÊôĞÔ,°üÀ¨ContextHandle,Actor,CharacterµÈµÈ
+	//ä»PostGameplayEffectExecuteçš„Dataä¸­è·å–æ‰€æœ‰çš„å±æ€§,åŒ…æ‹¬ContextHandle,Actor,Characterç­‰ç­‰
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props);
 
 	
@@ -229,24 +229,24 @@ private:
 
 
 /*
-¾­¹ıÁË³¤´ï¼¸·ÖÖÓµÄË¼¿¼£¬Ö÷ÒªÊôĞÔÎªÒ»ÏÂ¼¸Ïî£º
+ç»è¿‡äº†é•¿è¾¾å‡ åˆ†é’Ÿçš„æ€è€ƒï¼Œä¸»è¦å±æ€§ä¸ºä¸€ä¸‹å‡ é¡¹ï¼š
 
-Strength Á¦Á¿
-Intelligence ÖÇÁ¦
-Resilience ÈÍĞÔ
-Vigor ÌåÁ¦
+Strength åŠ›é‡
+Intelligence æ™ºåŠ›
+Resilience éŸ§æ€§
+Vigor ä½“åŠ›
 
 
-¶ø´ÎÒªÊôĞÔÀïÃæÎÒÃÇÉè¼ÆÁË¶àÏîÊıÖµ£¬ÒÀÍĞÓÚÉÏÃæµÄÖ÷ÒªÊôĞÔ£¬Ö÷ÒªÓÃÓÚÕ½¶·ÖĞ
+è€Œæ¬¡è¦å±æ€§é‡Œé¢æˆ‘ä»¬è®¾è®¡äº†å¤šé¡¹æ•°å€¼ï¼Œä¾æ‰˜äºä¸Šé¢çš„ä¸»è¦å±æ€§ï¼Œä¸»è¦ç”¨äºæˆ˜æ–—ä¸­
 
-MaxHealth ÑªÁ¿ÉÏÏŞ£¬»ùÓÚVigor ÌåÁ¦ÊôĞÔ¼ÆËã
-MaxMana À¶Á¿ÉÏÏŞ£¬»ùÓÚIntelligence ÖÇÁ¦ÊôĞÔ
-Armor ·ÀÓù£¬»ùÓÚResilience ÈÍĞÔÊôĞÔ¼ÆËã£¬ ½µµÍËùÊÜÉËº¦
-ArmorPenetration »¤¼×´©Í¸£¬»ùÓÚResilience ÈÍĞÔÊôĞÔ¼ÆËã£¬½µµÍµĞÈËµÄ·ÀÓù£¬Ôö¼Ó±©»÷ÂÊ
-BlockChance ¸ñµ²ÂÊ £¬»ùÓÚArmor ·ÀÓùÊôĞÔ¼ÆËã£¬Ôö¼Ó¸ñµ²ÉËº¦¸ÅÂÊ£¬´¥·¢Ê±£¬½µµÍÒ»°ëËùÊÜÉËº¦
-CriticalHitChance ±©»÷ÂÊ£¬»ùÓÚArmorPenetration »¤¼×´©Í¸ÊôĞÔ¼ÆËã£¬Ôö¼Ó´¥·¢±©»÷ÉËº¦µÄ¸ÅÂÊ
-CriticalHitDamage ±©»÷ÉËº¦£¬»ùÓÚArmorPenetration »¤¼×´©Í¸ÊôĞÔ¼ÆËã£¬´¥·¢±©»÷Ê±»ùÓÚÔö¼ÓµÄÉËº¦Á¿
-CriticalHitResistance ±©»÷µÖ¿¹£¬»ùÓÚArmor ·ÀÓùÊôĞÔ¼ÆËã£¬½µµÍµĞÈËµÄ±©»÷¸ÅÂÊ
-HealthRegeneration ÑªÁ¿×Ô¶¯»Ö¸´£¬»ùÓÚVigor ÌåÁ¦ÊôĞÔ¼ÆËã£¬Ã¿Ãë×Ô¶¯»Ö¸´Ò»¶¨ÑªÁ¿
-ManaRegeneration À¶Á¿×Ô¶¯»Ö¸´£¬»ùÓÚIntelligence ÖÇÁ¦ÊôĞÔ£¬Ã¿Ãë×Ô¶¯»Ö¸´À¶Á¿
+MaxHealth è¡€é‡ä¸Šé™ï¼ŒåŸºäºVigor ä½“åŠ›å±æ€§è®¡ç®—
+MaxMana è“é‡ä¸Šé™ï¼ŒåŸºäºIntelligence æ™ºåŠ›å±æ€§
+Armor é˜²å¾¡ï¼ŒåŸºäºResilience éŸ§æ€§å±æ€§è®¡ç®—ï¼Œ é™ä½æ‰€å—ä¼¤å®³
+ArmorPenetration æŠ¤ç”²ç©¿é€ï¼ŒåŸºäºResilience éŸ§æ€§å±æ€§è®¡ç®—ï¼Œé™ä½æ•Œäººçš„é˜²å¾¡ï¼Œå¢åŠ æš´å‡»ç‡
+BlockChance æ ¼æŒ¡ç‡ ï¼ŒåŸºäºArmor é˜²å¾¡å±æ€§è®¡ç®—ï¼Œå¢åŠ æ ¼æŒ¡ä¼¤å®³æ¦‚ç‡ï¼Œè§¦å‘æ—¶ï¼Œé™ä½ä¸€åŠæ‰€å—ä¼¤å®³
+CriticalHitChance æš´å‡»ç‡ï¼ŒåŸºäºArmorPenetration æŠ¤ç”²ç©¿é€å±æ€§è®¡ç®—ï¼Œå¢åŠ è§¦å‘æš´å‡»ä¼¤å®³çš„æ¦‚ç‡
+CriticalHitDamage æš´å‡»ä¼¤å®³ï¼ŒåŸºäºArmorPenetration æŠ¤ç”²ç©¿é€å±æ€§è®¡ç®—ï¼Œè§¦å‘æš´å‡»æ—¶åŸºäºå¢åŠ çš„ä¼¤å®³é‡
+CriticalHitResistance æš´å‡»æŠµæŠ—ï¼ŒåŸºäºArmor é˜²å¾¡å±æ€§è®¡ç®—ï¼Œé™ä½æ•Œäººçš„æš´å‡»æ¦‚ç‡
+HealthRegeneration è¡€é‡è‡ªåŠ¨æ¢å¤ï¼ŒåŸºäºVigor ä½“åŠ›å±æ€§è®¡ç®—ï¼Œæ¯ç§’è‡ªåŠ¨æ¢å¤ä¸€å®šè¡€é‡
+ManaRegeneration è“é‡è‡ªåŠ¨æ¢å¤ï¼ŒåŸºäºIntelligence æ™ºåŠ›å±æ€§ï¼Œæ¯ç§’è‡ªåŠ¨æ¢å¤è“é‡
 */

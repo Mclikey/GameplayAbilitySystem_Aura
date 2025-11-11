@@ -12,7 +12,7 @@ class UGameplayEffect;
 class UAbilitySystemComponent;
 
 UENUM(BlueprintType)
-//ÔÚOverlap¿ªÊ¼Ê±»¹ÊÇ½áÊøÊ±Ó¦ÓÃEffectĞ§¹û
+//åœ¨Overlapå¼€å§‹æ—¶è¿˜æ˜¯ç»“æŸæ—¶åº”ç”¨Effectæ•ˆæœ
 enum class EEffectApplicationPolicy : uint8
 {
 	ApplyOnOverlap,
@@ -20,7 +20,7 @@ enum class EEffectApplicationPolicy : uint8
 	DoNotApply
 };
 
-//ÔÚOverlap½áÊøÊ±ÊÇ·ñÒÆ³ıEffectĞ§¹û£¨ÎŞÏŞÊ±³¤µÄEffect£©
+//åœ¨Overlapç»“æŸæ—¶æ˜¯å¦ç§»é™¤Effectæ•ˆæœï¼ˆæ— é™æ—¶é•¿çš„Effectï¼‰
 UENUM(BlueprintType)
 enum class EEffectRemovalPolicy : uint8
 {
@@ -40,11 +40,11 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-	//¶ÔÄ¿±êÌí¼ÓEffectsµÄÖ´ĞĞÂß¼­
+	//å¯¹ç›®æ ‡æ·»åŠ Effectsçš„æ‰§è¡Œé€»è¾‘
 	UFUNCTION(BlueprintCallable)
 	void AppleEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass);
 
-	//Òª¶ÔÄ¿±êÌí¼ÓµÄEffectClass
+	//è¦å¯¹ç›®æ ‡æ·»åŠ çš„EffectClass
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category = "Applied Effects")
 	TSubclassOf<UGameplayEffect> InstantGameplayEffectClass;
 
@@ -61,7 +61,7 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void OnEndOverlap(AActor* TargetActor);
 
-	//ÊÇ·ñÔÚĞ§¹ûÒÆ³ıÊ±´İ»Ù×ÔÉí
+	//æ˜¯å¦åœ¨æ•ˆæœç§»é™¤æ—¶æ‘§æ¯è‡ªèº«
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
 	bool bDestroyOnEffectRemoval = false;
 

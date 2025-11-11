@@ -26,12 +26,12 @@ public:
 
 	virtual void BindCallbacksToDependencies()override;
 
-	UPROPERTY(BlueprintAssignable, Category = "GAS|Attributes")//ÉèÖÃBlueprintAssignable¿ÉÒÔÔÚÀ¶Í¼×÷ÎªÎ¯ÍĞ°ó¶¨¼àÌı
+	UPROPERTY(BlueprintAssignable, Category = "GAS|Attributes")//è®¾ç½®BlueprintAssignableå¯ä»¥åœ¨è“å›¾ä½œä¸ºå§”æ‰˜ç»‘å®šç›‘å¬
 	FAttributeInfoSignature AttributeInfoDelegate;
 
 protected:
 
-	UPROPERTY(EditDefaultsOnly)//EditDefaultsOnlyÖ»ÄÜÔÚUEÃæ°å±à¼­	
+	UPROPERTY(EditDefaultsOnly)//EditDefaultsOnlyåªèƒ½åœ¨UEé¢æ¿ç¼–è¾‘	
 	TObjectPtr<UAttributeInfo> AttributeInfo;
 
 

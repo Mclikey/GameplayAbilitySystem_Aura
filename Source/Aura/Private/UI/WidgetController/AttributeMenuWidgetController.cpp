@@ -12,8 +12,8 @@ void UAttributeMenuWidgetController::BroadcastInitivalValues()
 
 	check(AttributeInfo);
 
-	//Í¨¹ýTagÈ¥»ñÈ¡DataAssetÀïÃæ´æ´¢µÄÊôÐÔÊý¾Ý£¬È»ºóÍ¨¹ývalue»ñÈ¡µ½ÊôÐÔ£¬
-// Í¨¹ýÊôÐÔµÄGetNumericValue(AS)·½·¨»ñÈ¡µ½¶ÔÓ¦Öµ£¬ÔÙ½«Õâ¸öÊôÐÔÐÅÏ¢½á¹¹Ìå¹ã²¥³öÈ¥¡£
+	//é€šè¿‡TagåŽ»èŽ·å–DataAsseté‡Œé¢å­˜å‚¨çš„å±žæ€§æ•°æ®ï¼Œç„¶åŽé€šè¿‡valueèŽ·å–åˆ°å±žæ€§ï¼Œ
+	// é€šè¿‡å±žæ€§çš„GetNumericValue(AS)æ–¹æ³•èŽ·å–åˆ°å¯¹åº”å€¼ï¼Œå†å°†è¿™ä¸ªå±žæ€§ä¿¡æ¯ç»“æž„ä½“å¹¿æ’­å‡ºåŽ»ã€‚
 
 	for (auto& Pair : AS->TagsToAttributes)
 	{

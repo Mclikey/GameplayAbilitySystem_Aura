@@ -11,9 +11,9 @@ AAuraEnemy::AAuraEnemy()
 	GetMesh()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
 
 	AbilitySystemComponent = CreateDefaultSubobject<UAuraAbilitySystemComponent>("AbilitySystemComponent");
-	//¿ªÆôÍøÂç¸´ÖÆ¹¦ÄÜ£¬ÆôÓÃºó¡£·þÎñÆ÷ÉÏ·¢ÉúµÄ×´Ì¬±ä»¯(±ÈÈç¼¼ÄÜ¼¤»î£¬ÊôÐÔ±ä»¯µÈ)»á×Ô¶¯Í¬²½µ½¿Í»§¶Ë
+	//å¼€å¯ç½‘ç»œå¤åˆ¶åŠŸèƒ½ï¼Œå¯ç”¨åŽã€‚æœåŠ¡å™¨ä¸Šå‘ç”Ÿçš„çŠ¶æ€å˜åŒ–(æ¯”å¦‚æŠ€èƒ½æ¿€æ´»ï¼Œå±žæ€§å˜åŒ–ç­‰)ä¼šè‡ªåŠ¨åŒæ­¥åˆ°å®¢æˆ·ç«¯
 	AbilitySystemComponent->SetIsReplicated(true);
-	//Éè·þÎñ¶Ë¸´ÖÆ·½·¨-minial(ÊÊºÏAI)
+	//è®¾æœåŠ¡ç«¯å¤åˆ¶æ–¹æ³•-minial(é€‚åˆAI)
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
 
 	AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSet");
@@ -48,7 +48,7 @@ void AAuraEnemy::BeginPlay()
 
 void AAuraEnemy::InitAbilityActorInfo()
 {
-	//³õÊ¼»¯AuraEnemyµÄActorInfo
+	//åˆå§‹åŒ–AuraEnemyçš„ActorInfo
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
 	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
 }

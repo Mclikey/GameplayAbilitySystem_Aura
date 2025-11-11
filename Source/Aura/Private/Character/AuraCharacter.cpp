@@ -23,13 +23,13 @@ AAuraCharacter::AAuraCharacter()
 void AAuraCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
-	//Îª·şÎñÆ÷³õÊ¼»¯  AbilityActorInfo
+	//ä¸ºæœåŠ¡å™¨åˆå§‹åŒ–  AbilityActorInfo
 	InitAbilityActorInfo();
 
-	//ÉèÖÃOwnerActorµÄController
+	//è®¾ç½®OwnerActorçš„Controller
 	SetOwner(NewController);
 
-	//³õÊ¼»¯½ÇÉ«¼¼ÄÜ
+	//åˆå§‹åŒ–è§’è‰²æŠ€èƒ½
 	AddCharacterAbilities();
 
 }
@@ -37,7 +37,7 @@ void AAuraCharacter::PossessedBy(AController* NewController)
 void AAuraCharacter::OnRep_PlayerState()
 {
 	Super::OnRep_PlayerState();
-	//Îª¿Í»§¶Ë³õÊ¼»¯  AbilityActorInfo
+	//ä¸ºå®¢æˆ·ç«¯åˆå§‹åŒ–  AbilityActorInfo
 	InitAbilityActorInfo();
 
 }
@@ -56,12 +56,12 @@ void AAuraCharacter::InitAbilityActorInfo()
 	AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
 	check(AuraPlayerState);
 	
-	//½«playerStateÖĞµÄASCºÍAS¸³Öµ¸øCharater,ÒòÎªÔÚcharacterµÄ¹¹Ôìº¯ÊıÖĞÃ»ÓĞÎªASCºÍAS¸³Öµ
+	//å°†playerStateä¸­çš„ASCå’ŒASèµ‹å€¼ç»™Charater,å› ä¸ºåœ¨characterçš„æ„é€ å‡½æ•°ä¸­æ²¡æœ‰ä¸ºASCå’ŒASèµ‹å€¼
 	AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();
-	//³õÊ¼»¯PlayerStateÖĞASCµÄĞÅÏ¢
+	//åˆå§‹åŒ–PlayerStateä¸­ASCçš„ä¿¡æ¯
 	AbilitySystemComponent->InitAbilityActorInfo(AuraPlayerState, this);
 
-	//´¥·¢ActorµÄ¼¼ÄÜĞÅÏ¢ÉèÖÃ»Øµ÷
+	//è§¦å‘Actorçš„æŠ€èƒ½ä¿¡æ¯è®¾ç½®å›è°ƒ
 	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
 
 	AttributeSet = AuraPlayerState->GetAttributeSet();
@@ -76,6 +76,6 @@ void AAuraCharacter::InitAbilityActorInfo()
 		}
 	}
 
-	//³õÊ¼»¯Íæ¼ÒÄ¬ÈÏÊôĞÔ
+	//åˆå§‹åŒ–ç©å®¶é»˜è®¤å±æ€§
 	InitializeDefaultAttributes();
 }

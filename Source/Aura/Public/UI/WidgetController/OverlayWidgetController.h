@@ -44,9 +44,9 @@ public:
 	
 	virtual void BindCallbacksToDependencies()override;
 
-	//BlueprintAssignable£ºÓ¦ÏÔÊ¾¸ÃÊôĞÔ£¬ÒÔ¹©ÔÚÀ¶Í¼ÖĞ·ÖÅä£¬À¶Í¼ÖĞ¿É°ó¶¨Î¯ÍĞ
-	//BlueprintCallable£ºÓ¦ÏÔÊ¾¸ÃÊôĞÔ£¬ÒÔÔÚÀ¶Í¼´úÂëÖĞµ÷ÓÃ£¬À¶Í¼ÖĞ¿É°ó¶¨Î¯ÍĞ
-	//FOnAttributeChangedSignatureÏûÏ¢Ãû
+	//BlueprintAssignableï¼šåº”æ˜¾ç¤ºè¯¥å±æ€§ï¼Œä»¥ä¾›åœ¨è“å›¾ä¸­åˆ†é…ï¼Œè“å›¾ä¸­å¯ç»‘å®šå§”æ‰˜
+	//BlueprintCallableï¼šåº”æ˜¾ç¤ºè¯¥å±æ€§ï¼Œä»¥åœ¨è“å›¾ä»£ç ä¸­è°ƒç”¨ï¼Œè“å›¾ä¸­å¯ç»‘å®šå§”æ‰˜
+	//FOnAttributeChangedSignatureæ¶ˆæ¯å
 	UPROPERTY(BlueprintAssignable, Category = "GAS|Attributes")
 	FOnAttributeChangedSignature OnHealthChanged;
 
@@ -65,11 +65,11 @@ public:
 protected:
 
 
-	//EditDefaultsOnly ËµÃ÷´ËÊôĞÔ¿ÉÒÔÍ¨¹ıÊôĞÔ´°¿Ú±à¼­£¬µ«Ö»ÄÜÔÚÔ­ĞÍÉÏ½øĞĞ¡£
+	//EditDefaultsOnly è¯´æ˜æ­¤å±æ€§å¯ä»¥é€šè¿‡å±æ€§çª—å£ç¼–è¾‘ï¼Œä½†åªèƒ½åœ¨åŸå‹ä¸Šè¿›è¡Œã€‚
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Widget Data")
 	TObjectPtr<UDataTable> MessageWidgetDataTable;
 
-	//¸ù¾İ´«ÈëµÄ±í¸ñºÍTag·µ»Ø²éÕÒµ½µÄÊı¾İ£¬±í¸ñÀàĞÍ²»È·¶¨£¬ËùÒÔÊ¹ÓÃTÀ´±íÊ¾£¬ÔÚÊ¹ÓÃ´Ëº¯ÊıÊ±£¬ĞèÒªÖ¸¶¨¶ÔÓ¦ÀàĞÍ
+	//æ ¹æ®ä¼ å…¥çš„è¡¨æ ¼å’ŒTagè¿”å›æŸ¥æ‰¾åˆ°çš„æ•°æ®ï¼Œè¡¨æ ¼ç±»å‹ä¸ç¡®å®šï¼Œæ‰€ä»¥ä½¿ç”¨Tæ¥è¡¨ç¤ºï¼Œåœ¨ä½¿ç”¨æ­¤å‡½æ•°æ—¶ï¼Œéœ€è¦æŒ‡å®šå¯¹åº”ç±»å‹
 	template<typename T>
 	T* GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag& Tag);
 

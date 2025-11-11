@@ -5,7 +5,7 @@
 //#include "AbilitySystemComponent.h"
 #include "Net/UnrealNetwork.h"
 #include "GameFramework/Character.h"
-#include "GameplayEffectExtension.h"  //	²ÅÄÜÊ¹FGameplayEffectModCallbackData& DataÓĞÒıÓÃ
+#include "GameplayEffectExtension.h"  //	æ‰èƒ½ä½¿FGameplayEffectModCallbackData& Dataæœ‰å¼•ç”¨
 #include "AbilitySystemBlueprintLibrary.h"
 
 #include "AuraGameplayTags.h"
@@ -69,8 +69,8 @@ void UAuraAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 	
 	//Vital Attributes
 	
-	//ÉèÖÃÊôĞÔHealthÔÚ·şÎñÆ÷ÉÏ¿ÉÒÔ±»Replicate,Ìõ¼şÎªNone,Always,Replicate
-	//¶ÔÓÚ×îºóÒ»¸öÊôĞÔ£¬ÆäÄ¬ÈÏÖµÎªREPNOTIFY_Onchange,Ò²¾ÍÊÇµ±¸ÃÊôĞÔ¸ü¸ÄÊ±²ÅReplicate
+	//è®¾ç½®å±æ€§Healthåœ¨æœåŠ¡å™¨ä¸Šå¯ä»¥è¢«Replicate,æ¡ä»¶ä¸ºNone,Always,Replicate
+	//å¯¹äºæœ€åä¸€ä¸ªå±æ€§ï¼Œå…¶é»˜è®¤å€¼ä¸ºREPNOTIFY_Onchange,ä¹Ÿå°±æ˜¯å½“è¯¥å±æ€§æ›´æ”¹æ—¶æ‰Replicate
 	DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet, Health, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet, Mana, COND_None, REPNOTIFY_Always);
 	
@@ -94,7 +94,7 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 {
 	Super::PostGameplayEffectExecute(Data);
 	FEffectProperties Props;
-	//ÔÚÕâÖ®ºó¿ÉÒÔÊ¹ÓÃPropsÀ´½øĞĞ¸÷ÖÖ²Ù×÷ÁË
+	//åœ¨è¿™ä¹‹åå¯ä»¥ä½¿ç”¨Propsæ¥è¿›è¡Œå„ç§æ“ä½œäº†
 	SetEffectProperties(Data, Props);
 
 	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
@@ -111,7 +111,7 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 //Vital Attributrs
 void UAuraAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth) const
 {
-	//Í¨ÖªÄÜÁ¦ÏµÍ³£¬ÎÒÃÇÕıÔÚReplicateÒ»¸öÊôĞÔ£¬´«ÈëOldHealthÎªÁËºóÆÚ»Ø¹ö
+	//é€šçŸ¥èƒ½åŠ›ç³»ç»Ÿï¼Œæˆ‘ä»¬æ­£åœ¨Replicateä¸€ä¸ªå±æ€§ï¼Œä¼ å…¥OldHealthä¸ºäº†åæœŸå›æ»š
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAuraAttributeSet, Health, OldHealth);
 }
 
@@ -207,7 +207,7 @@ void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData
 	{
 		Props.SourceAvatarActor = Props.SourceASC->AbilityActorInfo->AvatarActor.Get();
 		Props.SourceController = Props.SourceASC->AbilityActorInfo->PlayerController.Get();
-		//Èç¹ûGetPlayerControllerÎªnull,¿ÉÄÜ¸ÃController²»ÊÇPlayerController
+		//å¦‚æœGetPlayerControllerä¸ºnull,å¯èƒ½è¯¥Controllerä¸æ˜¯PlayerController
 		if (Props.SourceController == nullptr && Props.SourceAvatarActor != nullptr)
 		{
 			if (const APawn* Pawn = Cast<APawn>(Props.SourceAvatarActor))

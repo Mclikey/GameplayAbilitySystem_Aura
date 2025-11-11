@@ -23,19 +23,19 @@ class AURA_API AAuraPlayerState : public APlayerState, public IAbilitySystemInte
 public:
 	AAuraPlayerState();
 
-	//Ö¸¶¨ÄÇĞ©ÊôĞÔĞèÒªÔÚ·şÎñÆ÷ºÍ¿Í»§¶ËÖ®¼äÍ¬²½£¬²¢¶¨ÒåÃ¿¸öÊôĞÔµÄ¸´ÖÆÌõ¼ş£¨Replication Condition£©
+	//æŒ‡å®šé‚£äº›å±æ€§éœ€è¦åœ¨æœåŠ¡å™¨å’Œå®¢æˆ·ç«¯ä¹‹é—´åŒæ­¥ï¼Œå¹¶å®šä¹‰æ¯ä¸ªå±æ€§çš„å¤åˆ¶æ¡ä»¶ï¼ˆReplication Conditionï¼‰
 	virtual void GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifetimeProps) const override;
 
 
-	//»ñÈ¡AbilitySystem,¼Ì³ĞIAbilitySystemInterface½Ó¿Ú£¬ÖØĞ´º¯Êı
+	//è·å–AbilitySystem,ç»§æ‰¿IAbilitySystemInterfaceæ¥å£ï¼Œé‡å†™å‡½æ•°
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
-	//»ñÈ¡AttributeSet
+	//è·å–AttributeSet
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 
 	FORCEINLINE int32 GetPlayerLevel()const { return Level;}
 
 protected:
-	//GASÏµÍ³
+	//GASç³»ç»Ÿ
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 	UPROPERTY()
