@@ -2,27 +2,25 @@
 
 
 #include "Player/AuraPlayerController.h"
-
-#include "InputActionValue.h" //输入映射Value值的头文件
-#include "EnhancedInputComponent.h" //增强映射的头文件
-#include "EnhancedInputSubsystems.h" //增强子系统的头文件
-#include "EnhancedInputLibrary.h"
-#include "interaction/EnemyInterface.h"
-#include "Input/AuraInputComponent.h"
-#include "Components/SplineComponent.h"
 #include "AbilitySystemBlueprintLibrary.h"
-#include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AuraGameplayTags.h"
+#include "EnhancedInputSubsystems.h"
+#include "NavigationPath.h"
 #include "NavigationSystem.h"
-#include "NavigationPath.h"  
+#include "AbilitySystem/AuraAbilitySystemComponent.h"
+#include "Components/SplineComponent.h"
+#include "Input/AuraInputComponent.h"
+#include "interaction/EnemyInterface.h"
+
+
+
+
+
+
 
 AAuraPlayerController::AAuraPlayerController()
 {
 	bReplicates = true;//是否将数据传送服务器更新
-
-	LastActor = nullptr;
-	ThisActor = nullptr;
-
 	Spline = CreateDefaultSubobject<USplineComponent>("Spline");
 }
 
@@ -116,22 +114,32 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 				Spline->ClearSplinePoints(); //清除样条内现有的点
 
 				const TArray<FVector>& PathPoints = NavPath->PathPoints;  // 修改这里
-				for (const FVector& PointLoc : PathPoints)
+				// 添加边界检查
+				if (PathPoints.Num() > 0)
 				{
-					Spline->AddSplinePoint(PointLoc, ESplineCoordinateSpace::World); //将新的位置添加到样条曲线中
-					//DrawDebugSphere(GetWorld(), PointLoc, 8.f, 8, FColor::Orange, false, 5.f); //点击后debug调试
-				}
+					for (const FVector& PointLoc : PathPoints)
+					{
+						Spline->AddSplinePoint(PointLoc, ESplineCoordinateSpace::World); //将新的位置添加到样条曲线中
+						// DrawDebugSphere(GetWorld(), PointLoc, 8.f, 8, FColor::Orange, false, 5.f); //点击后debug调试
+					}
 
-				//自动寻路将最终目的地设置为导航的终点，方便停止导航
-				CachedDestination = NavPath->PathPoints[NavPath->PathPoints.Num() - 1];
-				bAutoRunning = true; //设置当前正常自动寻路状态，将在tick中更新位置
+					//自动寻路将最终目的地设置为导航的终点，方便停止导航
+					//CachedDestination = PathPoints[PathPoints.Num() - 1];
+					// 确保访问最后一个元素之前数组不为空
+					CachedDestination = PathPoints.Last(); // 使用Last()代替直接索引访问
+					bAutoRunning = true; //设置当前正常自动寻路状态，将在tick中更新位置
+					
+				}else
+				{
+					UE_LOG(LogTemp, Warning, TEXT("Navigation path is empty"));
+				}
 			}
 		}
 	}
 
 }
 
-void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
+void AAuraPlayerController::AbilityInputTagHeld(const FGameplayTag InputTag)
 {
 
 	if (!InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_LMB))
