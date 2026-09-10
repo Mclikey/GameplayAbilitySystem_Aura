@@ -51,4 +51,6 @@ void AAuraEnemy::InitAbilityActorInfo()
 	//初始化AuraEnemy的ActorInfo
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
 	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
+	
+	InitializeDefaultAttributes();
 }

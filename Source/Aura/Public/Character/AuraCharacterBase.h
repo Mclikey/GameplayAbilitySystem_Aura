@@ -19,27 +19,32 @@ class AURA_API AAuraCharacterBase : public ACharacter,public IAbilitySystemInter
 	GENERATED_BODY()
 
 public:
+	
+	virtual void BeginPlay() override;
+	
+	virtual FVector GetCombatSocketLocation() override;
+	
 	AAuraCharacterBase();
-
 	//重写GetAbilitySystemComponent()
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
-
-	virtual void InitAbilityActorInfo();
-
-
-
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 
 protected:
-	virtual void BeginPlay() override;
-
+	
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TObjectPtr<USkeletalMeshComponent> Weapon;
+	
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	FName WeaponTipSocketName;
+	
+	
 
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
+	
+	virtual void InitAbilityActorInfo();
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")
 	TSubclassOf<UGameplayEffect> DefaultPrimaryAttributes;

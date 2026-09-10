@@ -22,7 +22,7 @@ void UAuraAbilitySystemComponent::AddCharacterAbilities(const TArray<TSubclassOf
 		FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(AbilityClass, 1);
 		if (const UAuraGameplayAbility* AbilityBase = Cast<UAuraGameplayAbility>(AbilitySpec.Ability))
 		{
-			AbilitySpec.DynamicAbilityTags.AddTag(AbilityBase->StartupInputTag);
+			AbilitySpec.GetDynamicSpecSourceTags().AddTag(AbilityBase->StartupInputTag);
 			GiveAbility(AbilitySpec); //只应用不激活
 			// GiveAbilityAndActivateOnce(AbilitySpec); //应用技能并激活一次
 		}
@@ -35,7 +35,7 @@ void UAuraAbilitySystemComponent::AbilityInputTagHeld(const FGameplayTag& InputT
 
 	for (auto AbilitySpec : GetActivatableAbilities())
 	{
-		if (AbilitySpec.DynamicAbilityTags.HasTagExact(InputTag))
+		if (AbilitySpec.GetDynamicSpecSourceTags().HasTagExact(InputTag))
 		{
 			AbilitySpecInputPressed(AbilitySpec);
 			if (!AbilitySpec.IsActive())
@@ -53,7 +53,7 @@ void UAuraAbilitySystemComponent::AbilityInputTagReleased(const FGameplayTag& In
 
 	for (auto AbilitySpec : GetActivatableAbilities())
 	{
-		if (AbilitySpec.DynamicAbilityTags.HasTagExact(InputTag))
+		if (AbilitySpec.GetDynamicSpecSourceTags().HasTagExact(InputTag))
 		{
 			AbilitySpecInputReleased(AbilitySpec);
 		}

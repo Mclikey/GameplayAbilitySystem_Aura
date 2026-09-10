@@ -89,15 +89,9 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 		return;
 	}
 
-	if (bTargeting)
-	{
-		if (GetASC())
-		{
-			GetASC()->AbilityInputTagReleased(InputTag);
-		}
-
-	}
-	else
+	if (GetASC()) GetASC()->AbilityInputTagReleased(InputTag);
+	
+	if (!bTargeting && !bShiftKeyDown)
 	{
 		const APawn* ControlledPawn = GetPawn();
 		if (FollowTime <= ShortPressThreshold && ControlledPawn)
@@ -116,21 +110,25 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 						Spline->AddSplinePoint(PointLoc, ESplineCoordinateSpace::World); //将新的位置添加到样条曲线中
 						// DrawDebugSphere(GetWorld(), PointLoc, 8.f, 8, FColor::Orange, false, 5.f); //点击后debug调试
 					}
-
+				
 					//自动寻路将最终目的地设置为导航的终点，方便停止导航
 					//CachedDestination = PathPoints[PathPoints.Num() - 1];
 					// 确保访问最后一个元素之前数组不为空
 					CachedDestination = PathPoints.Last(); // 使用Last()代替直接索引访问
 					bAutoRunning = true; //设置当前正常自动寻路状态，将在tick中更新位置
-					
-				}else
-				{
-					UE_LOG(LogTemp, Warning, TEXT("Navigation path is empty"));
 				}
+				
+				// for (const FVector& PointLoc : NavPath->PathPoints)
+				// {
+				// 	Spline->AddSplinePoint(PointLoc,ESplineCoordinateSpace::World);
+				// }
+				// CachedDestination = NavPath->PathPoints[NavPath->PathPoints.Num() - 1];
+				// bAutoRunning = true;
 			}
+			FollowTime = 0.f;
+			bTargeting = false;
 		}
 	}
-
 }
 
 void AAuraPlayerController::AbilityInputTagHeld(const FGameplayTag InputTag)
@@ -145,7 +143,7 @@ void AAuraPlayerController::AbilityInputTagHeld(const FGameplayTag InputTag)
 		return;
 	}
 
-	if (bTargeting)
+	if (bTargeting || bShiftKeyDown)
 	{
 		if (GetASC())
 		{
@@ -211,6 +209,8 @@ void AAuraPlayerController::SetupInputComponent()
 	UAuraInputComponent* AuraInputComponent = CastChecked<UAuraInputComponent>(InputComponent);//获取到增强输入组件
 
 	AuraInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AAuraPlayerController::Move);
+	AuraInputComponent->BindAction(ShiftAction, ETriggerEvent::Started, this, &AAuraPlayerController::ShiftPressed);
+	AuraInputComponent->BindAction(ShiftAction, ETriggerEvent::Completed, this, &AAuraPlayerController::ShiftReleased);
 	AuraInputComponent->BindAbilityActions(InputConfig, this, &ThisClass::AbilityInputTagPressed, &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
 	
 
