@@ -5,8 +5,11 @@
 #include "CoreMinimal.h"
 #include "Character/AuraCharacterBase.h"
 #include "interaction/EnemyInterface.h"
+#include "UI/WidgetController/OverlayWidgetController.h"
 #include "AuraEnemy.generated.h"
 
+
+class UWidgetComponent;
 /**
  * 
  */
@@ -23,16 +26,26 @@ public:
 	/** Combat Interface */
 	virtual int32 GetPlayerLevel() override;
 	/** end Combat Interface*/
+	
+	virtual void BeginPlay() override;
+	
+	//广播委托，使用的overlayWidgetController的已经注册的委托广播
+	UPROPERTY(BlueprintAssignable)
+	FOnAttributeChangedSignature OnHealthChanged;
+	
+	UPROPERTY(BlueprintAssignable)
+	FOnAttributeChangedSignature OnMaxHealthChanged;
 
 protected:
 	
-	virtual void BeginPlay() override;
-
 	virtual void InitAbilityActorInfo() override;
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "character class Defaults")
 	int32 Level = 1;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TObjectPtr<UWidgetComponent> HealthBar;
 
 private:
 
