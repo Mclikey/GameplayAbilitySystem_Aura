@@ -9,6 +9,7 @@
 #include "AuraPlayerController.generated.h"
 
 
+class UDamageTextComponent;
 class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
@@ -16,6 +17,7 @@ class IEnemyInterface;
 class UAuraInputConfig;
 class UAuraAbilitySystemComponent;
 class USplineComponent;
+class ACharacter; // 前置声明
 
 /**
  * 
@@ -29,6 +31,8 @@ public:
 	AAuraPlayerController();
 	virtual void PlayerTick(float DeltaTime) override;
 
+	UFUNCTION(Client, Reliable)
+	void ShowDamageNumber(float DamageAmount,ACharacter* TargetCharacter);
 
 protected:
 	virtual void BeginPlay() override;
@@ -90,5 +94,8 @@ private:
 	TObjectPtr<USplineComponent> Spline; //自动寻路时生成的样条线
 
 	void AutoRun();
+	
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UDamageTextComponent> DamageTextComponentClass;
 
 };

@@ -170,8 +170,15 @@ public:
 	FGameplayAttributeData Mana;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Mana);
 
+	/*
+	 * Meta Attributes
+	 */
 	
-
+	UPROPERTY(BlueprintReadOnly,Category = "Meta Attributes")
+	FGameplayAttributeData IncomingDamage;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, IncomingDamage);
+	
+	
 
 	UFUNCTION()
 	void OnRep_Health(const FGameplayAttributeData& OldHealth) const;
@@ -221,7 +228,9 @@ public:
 
 private:
 	//从PostGameplayEffectExecute的Data中获取所有的属性,包括ContextHandle,Actor,Character等等
-	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props);
+	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const;
+	
+	void ShowFloatingText(const FEffectProperties& Props,float Damage) const;
 
 	
 };

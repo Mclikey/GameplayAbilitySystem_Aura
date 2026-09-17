@@ -3,10 +3,14 @@
 
 #include "Character/AuraEnemy.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
+#include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "Components/WidgetComponent.h"
-#include "UI/Widget/AuraUserWidget.h"
 #include "Aura/Aura.h"
+#include "UI/Widget/AuraUserWidget.h"
+#include "AuraGameplayTags.h"
+#include "GameFramework/CharacterMovementComponent.h"
+
 
 AAuraEnemy::AAuraEnemy()
 {
@@ -45,10 +49,19 @@ int32 AAuraEnemy::GetPlayerLevel()
 	return Level;
 }
 
+void AAuraEnemy::Die()
+{
+	SetLifeSpan(LifeSpan);
+	Super::Die();
+}
+
 void AAuraEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+	GetCharacterMovement()->MaxWalkSpeed = BaseWalkSpeed;
 	InitAbilityActorInfo();
+	UAuraAbilitySystemLibrary::GiveStartupAAbility(this,CastChecked<UAuraAbilitySystemComponent>(AbilitySystemComponent));
+	
 	
 	if (UAuraUserWidget* AuraUserWidget = Cast<UAuraUserWidget>(HealthBar->GetUserWidgetObject()))
 	{
@@ -71,13 +84,25 @@ void AAuraEnemy::BeginPlay()
 			}
 		);
 		
+		
+		AbilitySystemComponent->RegisterGameplayTagEvent(FAuraGameplayTags::Get().Effect_HitReact,EGameplayTagEventType::NewOrRemoved).AddUObject(
+			this,
+			&AAuraEnemy::HitReactTagChanged
+		);
+		
 		OnHealthChanged.Broadcast(AuraAS->GetHealth());
 		OnMaxHealthChanged.Broadcast(AuraAS->GetMaxHealth());
 	}
 	
 	
 	
-	
+}
+
+
+void AAuraEnemy::HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount)
+{
+	bHitReacting = NewCount > 0;
+	GetCharacterMovement()->MaxWalkSpeed = bHitReacting ? 0.f:BaseWalkSpeed;
 }
 
 void AAuraEnemy::InitAbilityActorInfo()
@@ -88,3 +113,20 @@ void AAuraEnemy::InitAbilityActorInfo()
 	
 	InitializeDefaultAttributes();
 }
+
+
+void AAuraEnemy::InitializeDefaultAttributes() const
+{
+	// 1. 先转成普通的非 const 指针并存入本地变量（使其成为左值）
+	UAuraAbilitySystemComponent* ASC = CastChecked<UAuraAbilitySystemComponent>(AbilitySystemComponent);
+
+	// 2. 传入这个变量
+	UAuraAbilitySystemLibrary::InitializeDefaultAttributes(
+		this, 
+		CharacterClass, 
+		Level, 
+		ASC
+	);
+}
+
+

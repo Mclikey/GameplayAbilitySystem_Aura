@@ -11,17 +11,20 @@ UMMC_MaxHealth::UMMC_MaxHealth()
 	VigorDef.AttributeSource = EGameplayEffectAttributeCaptureSource::Target;//设置拾取对象为GE的应用目标
 	VigorDef.bSnapshot = false;
 
-	RelevantAttributesToCapture.Add(VigorDef);//添加到捕获属性数值，只有添加到列表，才会去获取属性值
+	RelevantAttributesToCapture.Add(VigorDef);//添加到捕获属性数值，只有添加到列表，才会去获取属性值,核心：把这个配置塞进白名单列表！
 }
 
 float UMMC_MaxHealth::CalculateBaseMagnitude_Implementation(const FGameplayEffectSpec& Spec) const
 {
 
 	//  从 source 和 target 获取 Tag
+	// 1. 从技能效果包（Spec）里提取出施法者和受击者身上的标签容器
 	const FGameplayTagContainer* SourceTags = Spec.CapturedSourceTags.GetAggregatedTags();
 	const FGameplayTagContainer* TargetTags = Spec.CapturedTargetTags.GetAggregatedTags();
 
-	FAggregatorEvaluateParameters EvaluationParameters;
+	//FAggregatorEvaluateParameters作用是：在计算或提取某个属性（比如体力 Vigor）时，把双方身上当前的 Gameplay Tags（标签）打包传递进去，作为“修饰条件”或者“环境上下文”
+	//2. 创建一个评估参数结构体，并把标签装进去
+	FAggregatorEvaluateParameters EvaluationParameters;  //聚合器评估参数
 	EvaluationParameters.SourceTags = SourceTags;
 	EvaluationParameters.TargetTags = TargetTags;
 
