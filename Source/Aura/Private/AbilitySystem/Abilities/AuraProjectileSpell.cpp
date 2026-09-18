@@ -49,8 +49,18 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 				
 		
 		const UAbilitySystemComponent* SourceASC =  UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo());
+		FGameplayEffectContextHandle EffectContextHandle = SourceASC->MakeEffectContext();
+		EffectContextHandle.SetAbility(this);
+		EffectContextHandle.AddSourceObject(Projectile);
+		TArray<TWeakObjectPtr<AActor>> Actors;
+		Actors.Add(Projectile);	
+		EffectContextHandle.AddActors(Actors);
+		FHitResult HitResult;
+		HitResult.Location = ProjectileTargetLocation;
+		EffectContextHandle.AddHitResult(HitResult);
+		
 		//通过配置好的伤害效果类（DamageEffectClass）创建一个 GameplayEffect 的实例蓝图（SpecHandle）。此时这个 Spec 里面还不知道具体的伤害数值是多少（它可能是一个空的模板）。
-		const FGameplayEffectSpecHandle SpecHandle =  SourceASC->MakeOutgoingSpec(DamageEffectClass,GetAbilityLevel(),SourceASC->MakeEffectContext());
+		const FGameplayEffectSpecHandle SpecHandle =  SourceASC->MakeOutgoingSpec(DamageEffectClass,GetAbilityLevel(),EffectContextHandle);
 		
 		const FAuraGameplayTags GameplayTags = FAuraGameplayTags::Get();
 		//在数据包（SpecHandle）里贴上一个名叫 Damage 的标签，并把它的数值设为 50.f
@@ -58,10 +68,12 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 		//你可以让同一个 GameplayEffect 在不同技能里打出不同的伤害数字（火球术 50 点，普攻 20 点），
 		//而不需要为每个技能单独去创建几十个不同的 GameplayEffect 资产
 		
-		// const float ScaledDamage = Damage.GetValueAtLevel(GetAbilityLevel());
-		const float ScaledDamage = Damage.GetValueAtLevel(20);
+		for (auto& Pair: DamageTypes)
+		{
+			const float ScaledDamage = Pair.Value.GetValueAtLevel(GetAbilityLevel());
+			UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle,Pair.Key,ScaledDamage);
+		}
 		
-		UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle,GameplayTags.Damage,ScaledDamage);
 		//把这个已经塞了 Damage = 50.f 标签数据的完整数据包赋值给生成的投掷物 (AAuraProjectile)。
 		//当这个火球砸中敌人时，投掷物会把这个 SpecHandle 应用到敌人的 AbilitySystemComponent 上。
 		// 第二步：在它正式启动前，把前面带标签的伤害数据包安全地塞给它！

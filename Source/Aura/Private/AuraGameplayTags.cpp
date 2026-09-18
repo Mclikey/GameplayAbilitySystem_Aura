@@ -160,6 +160,68 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 				FString("Damage")
 			);
 	
+	
+	//伤害类型标签
+	
+	GameplayTags.Damage_Fire = UGameplayTagsManager::Get()
+			.AddNativeGameplayTag(
+				FName("Damage.Fire"),
+				FString("Fire Damage Type")
+			);
+	
+	GameplayTags.Damage_Lightning = UGameplayTagsManager::Get()
+			.AddNativeGameplayTag(
+				FName("Damage.Lightning"),
+				FString("Lightning Damage Type")
+			);
+	
+	GameplayTags.Damage_Arcane = UGameplayTagsManager::Get()
+			.AddNativeGameplayTag(
+				FName("Damage.Arcane"),
+				FString("Arcane Damage Type")
+			);
+	
+	GameplayTags.Damage_Physical = UGameplayTagsManager::Get()
+			.AddNativeGameplayTag(
+				FName("Damage.Physical"),
+				FString("Physical Damage Type")
+			);
+	
+	
+	//伤害阻力标签
+	GameplayTags.Attributes_Resistance_Fire = UGameplayTagsManager::Get()
+			.AddNativeGameplayTag(
+				FName("Attributes.Resistance.Fire"),
+				FString("Resistance to Fire damage")
+			);
+	
+	GameplayTags.Attributes_Resistance_Lightning = UGameplayTagsManager::Get()
+			.AddNativeGameplayTag(
+				FName("Attributes.Resistance.Lightning"),
+				FString("Resistance to Lighting damage")
+			);
+	
+	GameplayTags.Attributes_Resistance_Arcane = UGameplayTagsManager::Get()
+			.AddNativeGameplayTag(
+				FName("Attributes.Resistance.Arcane"),
+				FString("Resistance to Arcane damage")
+			);
+	
+	GameplayTags.Attributes_Resistance_Physical = UGameplayTagsManager::Get()
+			.AddNativeGameplayTag(
+				FName("Attributes.Resistance.Physical"),
+				FString("Resistance to Physical damage")
+			);
+	
+	
+	//阻力类型集合Map
+	GameplayTags.DamageTypesToResistance.Add(GameplayTags.Damage_Fire,GameplayTags.Attributes_Resistance_Fire);
+	GameplayTags.DamageTypesToResistance.Add(GameplayTags.Damage_Lightning,GameplayTags.Attributes_Resistance_Lightning);
+	GameplayTags.DamageTypesToResistance.Add(GameplayTags.Damage_Arcane,GameplayTags.Attributes_Resistance_Arcane);
+	GameplayTags.DamageTypesToResistance.Add(GameplayTags.Damage_Physical,GameplayTags.Attributes_Resistance_Physical);
+	
+	
+	//受击效果标签
 	GameplayTags.Effect_HitReact = UGameplayTagsManager::Get()
 			.AddNativeGameplayTag(
 				FName("Effect.HitReact"),

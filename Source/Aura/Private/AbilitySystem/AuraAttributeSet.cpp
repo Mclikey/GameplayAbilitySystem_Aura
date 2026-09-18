@@ -7,6 +7,7 @@
 #include "GameplayEffectExtension.h"  //	才能使FGameplayEffectModCallbackData& Data有引用
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AuraGameplayTags.h"
+#include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "interaction/CombatInterface.h"
 #include "Kismet/GameplayStatics.h"
 #include "Player/AuraPlayerController.h"
@@ -96,8 +97,7 @@ void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData
 {
 	Props.EffectContextHandle = Data.EffectSpec.GetContext();
 	Props.SourceASC = Props.EffectContextHandle.GetOriginalInstigatorAbilitySystemComponent();
-	if (IsValid(Props.SourceASC) && Props.SourceASC->AbilityActorInfo.IsValid()
-		&& Props.SourceASC->AbilityActorInfo->AvatarActor.IsValid())
+	if (IsValid(Props.SourceASC) && Props.SourceASC->AbilityActorInfo.IsValid() && Props.SourceASC->AbilityActorInfo->AvatarActor.IsValid())
 	{
 		Props.SourceAvatarActor = Props.SourceASC->AbilityActorInfo->AvatarActor.Get();
 		Props.SourceController = Props.SourceASC->AbilityActorInfo->PlayerController.Get();
@@ -168,13 +168,15 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 				Props.TargetASC->TryActivateAbilitiesByTag(TagContainer);
 			}
 			
-			ShowFloatingText(Props,LocalIncomingDamage);
+			const bool bBlock = UAuraAbilitySystemLibrary::IsBlockedHit(Props.EffectContextHandle);
+			const bool bCriticalHit = UAuraAbilitySystemLibrary::IsCriticalHit(Props.EffectContextHandle);
+			ShowFloatingText(Props,LocalIncomingDamage,bBlock,bCriticalHit);
 		}
 	}
 }
 
 
-void UAuraAttributeSet::ShowFloatingText(const FEffectProperties& Props, float Damage) const
+void UAuraAttributeSet::ShowFloatingText(const FEffectProperties& Props, float Damage,bool bBlockedHit,bool bCriticalHit) const
 {
 	//生成伤害数值component
 	if (Props.SourceCharacter != Props.TargetCharacter)
@@ -183,7 +185,7 @@ void UAuraAttributeSet::ShowFloatingText(const FEffectProperties& Props, float D
 		AAuraPlayerController* PC = Cast<AAuraPlayerController>(UGameplayStatics::GetPlayerController(Props.SourceCharacter,0));
 		if (PC)
 		{
-			PC->ShowDamageNumber(Damage,Props.TargetCharacter);	
+			PC->ShowDamageNumber(Damage,Props.TargetCharacter,bBlockedHit,bCriticalHit);	
 		}
 	}
 }
