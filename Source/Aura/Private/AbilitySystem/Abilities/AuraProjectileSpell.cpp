@@ -26,24 +26,24 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 	ICombatInterface *CombatInterface = Cast<ICombatInterface>(GetAvatarActorFromActorInfo());
 	if (CombatInterface)
 	{
-		const FVector SocketLocation = CombatInterface->GetCombatSocketLocation();
 		
+		AActor* AvatarActor = GetAvatarActorFromActorInfo();   // 才是真正的施法角色
+		
+		const FVector SocketLocation = CombatInterface->GetCombatSocketLocation();
 		FRotator Rotation = (ProjectileTargetLocation - SocketLocation).Rotation();
-		Rotation.Pitch = 0.0f;
 		
 		FTransform SpawnTransform;
 		SpawnTransform.SetLocation(SocketLocation);
 		
 		SpawnTransform.SetRotation(Rotation.Quaternion());
 		
-		
 		//第一步：用 SpawnActorDeferred 创建半成品投掷物
 		//SpawnActorDeferred延迟生成
 		AAuraProjectile* Projectile =  GetWorld()->SpawnActorDeferred<AAuraProjectile>(
 			ProjectileClass,                               // 1. 要生成的资产类（比如你的火球术蓝图）
 			SpawnTransform,                                // 2. 生成时的位置和旋转（坐标、朝向）
-			GetOwningActorFromActorInfo(),                 // 3. 所有者 (Owner)：谁拥有它
-			Cast<APawn>(GetOwningActorFromActorInfo()),    // 4. 施法者/煽动者 (Instigator)：通常是哪个 Pawn 发起的攻击
+			AvatarActor,                 // 3. 所有者 (Owner)：谁拥有它
+			Cast<APawn>(AvatarActor),    // 4. 施法者/煽动者 (Instigator)：通常是哪个 Pawn 发起的攻击
 			ESpawnActorCollisionHandlingMethod::AlwaysSpawn // 5. 碰撞冲突处理：即使生成的位置卡在墙里，也强行生成，不取消
 		);
 				
@@ -52,6 +52,7 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 		FGameplayEffectContextHandle EffectContextHandle = SourceASC->MakeEffectContext();
 		EffectContextHandle.SetAbility(this);
 		EffectContextHandle.AddSourceObject(Projectile);
+		
 		TArray<TWeakObjectPtr<AActor>> Actors;
 		Actors.Add(Projectile);	
 		EffectContextHandle.AddActors(Actors);
