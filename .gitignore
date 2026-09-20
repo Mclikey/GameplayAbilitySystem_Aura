@@ -6,6 +6,9 @@ Build
 
 .vscode
 .vs
+.idea/
+*.DotSettings.user
+Plugins/Developer/RiderLink/
 *.VC.db
 *.opensdf
 *.opendb
