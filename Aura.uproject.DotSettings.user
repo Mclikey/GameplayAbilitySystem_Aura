@@ -1,3 +1,0 @@
-﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=45496A79_002DB3B2_002DAFD7_002DC5DE_002D6BADD186A5E9_002Ff_003AAura_002EBuild_002Ecs/@EntryIndexedValue">ExplicitlyExcluded</s:String>
-	<s:Boolean x:Key="/Default/CppUnrealEngine/RegenerateUE4ProjectPropertiesOnProjectFileChange/@EntryValue">False</s:Boolean></wpf:ResourceDictionary>
