@@ -63,7 +63,12 @@ protected:
 
 	//是否在效果移除时摧毁自身
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
-	bool bDestroyOnEffectRemoval = false;
+	bool bDestroyOnEffectApplication = false;
+	
+	//效果是否作用在敌人身上
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
+	bool bApplyEffectToEnemies = false;
+	
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
 	EEffectApplicationPolicy InstantEffectApplicationPolicy = EEffectApplicationPolicy::DoNotApply;

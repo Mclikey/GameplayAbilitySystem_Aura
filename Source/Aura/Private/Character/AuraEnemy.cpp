@@ -26,6 +26,13 @@ AAuraEnemy::AAuraEnemy()
 	AbilitySystemComponent->SetIsReplicated(true);
 	//设服务端复制方法-minial(适合AI)
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
+	
+	bUseControllerRotationPitch = false;
+	bUseControllerRotationRoll = false;
+	bUseControllerRotationYaw = false;
+	GetCharacterMovement()->bUseControllerDesiredRotation = true;
+	
+	
 
 	AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSet");
 	
@@ -40,9 +47,12 @@ void AAuraEnemy::PossessedBy(AController* NewController)
 	
 	if (!HasAuthority()) return;  //只在服务器上处理ai，客户端纯复制
 	AuraAIController = Cast<AAuraAIController>(NewController);
-	
 	AuraAIController->GetBlackboardComponent()->InitializeBlackboard(*BehaviorTree->BlackboardAsset);
 	AuraAIController->RunBehaviorTree(BehaviorTree);
+	
+	AuraAIController->GetBlackboardComponent()->SetValueAsBool(FName("HitReacting"),false);
+	AuraAIController->GetBlackboardComponent()->SetValueAsBool(FName("RangedAttacker"),CharacterClass != ECharacterClass::Warrior);
+	
 }
 
 void AAuraEnemy::HighlightActor()
@@ -124,6 +134,8 @@ void AAuraEnemy::HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCou
 {
 	bHitReacting = NewCount > 0;
 	GetCharacterMovement()->MaxWalkSpeed = bHitReacting ? 0.f:BaseWalkSpeed;
+	
+	AuraAIController->GetBlackboardComponent()->SetValueAsBool(FName("HitReacting"),bHitReacting);
 }
 
 void AAuraEnemy::InitAbilityActorInfo()

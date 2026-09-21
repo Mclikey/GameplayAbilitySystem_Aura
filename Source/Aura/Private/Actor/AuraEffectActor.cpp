@@ -27,6 +27,8 @@ void AAuraEffectActor::BeginPlay()
 void AAuraEffectActor::AppleEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass)
 {
 
+	if (TargetActor->ActorHasTag(FName("Enemy")) && !bApplyEffectToEnemies) return;
+	
 	//这个函数是工具库,可以获取实现了IAbilitySystem接口的Actor的AbilitySystem
 	UAbilitySystemComponent* TargetASC =  UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
 	if (TargetASC == nullptr) return;
@@ -55,11 +57,18 @@ void AAuraEffectActor::AppleEffectToTarget(AActor* TargetActor, TSubclassOf<UGam
 	{
 		ActiveEffectHandles.Add(ActiveEffectHandle, TargetASC);
 	}
+	
+	if (!bIsInfinite)
+	{
+		 Destroy();
+	}
 
 }
 
 void AAuraEffectActor::OnOverlap(AActor* TargetActor)
 {
+	if (TargetActor->ActorHasTag(FName("Enemy")) && !bApplyEffectToEnemies) return;
+	
 	if (InstantEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnOverlap)
 	{
 		AppleEffectToTarget(TargetActor, InstantGameplayEffectClass);
@@ -77,6 +86,9 @@ void AAuraEffectActor::OnOverlap(AActor* TargetActor)
 
 void AAuraEffectActor::OnEndOverlap(AActor* TargetActor)
 {
+	
+	if (TargetActor->ActorHasTag(FName("Enemy")) && !bApplyEffectToEnemies) return;
+	
 	if (InstantEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnEndOverlap)
 	{
 		AppleEffectToTarget(TargetActor, InstantGameplayEffectClass);
