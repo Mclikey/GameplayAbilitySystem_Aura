@@ -53,6 +53,10 @@ void AAuraEnemy::PossessedBy(AController* NewController)
 	AuraAIController->GetBlackboardComponent()->SetValueAsBool(FName("HitReacting"),false);
 	AuraAIController->GetBlackboardComponent()->SetValueAsBool(FName("RangedAttacker"),CharacterClass != ECharacterClass::Warrior);
 	
+	UE_LOG(LogTemp, Warning, TEXT("[Enemy] Pawn=%s Class=%d BTRanged=%d"),
+	*GetName(), (int32)CharacterClass,
+	AuraAIController->GetBlackboardComponent()->GetValueAsBool(FName("RangedAttacker")));
+	
 }
 
 void AAuraEnemy::HighlightActor()
@@ -81,6 +85,16 @@ void AAuraEnemy::Die()
 	Super::Die();
 }
 
+void AAuraEnemy::SetCombatTarget_Implementation(AActor* InCombatTarget)
+{
+	CombatTarget = InCombatTarget;
+}
+
+AActor* AAuraEnemy::GetCombatTarget_Implementation() const
+{
+	return CombatTarget;
+}
+
 void AAuraEnemy::BeginPlay()
 {
 	Super::BeginPlay();
@@ -89,7 +103,7 @@ void AAuraEnemy::BeginPlay()
 	
 	if (HasAuthority())
 	{
-		UAuraAbilitySystemLibrary::GiveStartupAAbility(this,CastChecked<UAuraAbilitySystemComponent>(AbilitySystemComponent));
+		UAuraAbilitySystemLibrary::GiveStartupAbility(this,CastChecked<UAuraAbilitySystemComponent>(AbilitySystemComponent),CharacterClass);
 	}
 	
 	

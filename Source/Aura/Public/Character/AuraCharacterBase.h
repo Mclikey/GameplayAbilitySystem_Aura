@@ -23,7 +23,7 @@ public:
 	
 	virtual void BeginPlay() override;
 	
-	virtual FVector GetCombatSocketLocation() override;
+	virtual FVector GetCombatSocketLocation_Implementation() override;
 	
 	AAuraCharacterBase();
 	//重写GetAbilitySystemComponent()

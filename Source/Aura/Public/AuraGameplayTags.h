@@ -53,6 +53,8 @@ public:
 	FGameplayTag Damage_Physical;
 	
 	
+	FGameplayTag Abilities_Attack;
+	
 	TMap<FGameplayTag,FGameplayTag> DamageTypesToResistance;  //损坏类型
 	
 	FGameplayTag Effect_HitReact;

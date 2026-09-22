@@ -35,6 +35,9 @@ public:
 	
 	virtual void Die() override;
 	
+	virtual void SetCombatTarget_Implementation(AActor* InCombatTarget) override;
+	virtual  AActor* GetCombatTarget_Implementation() const override;
+	
 	/** end Combat Interface*/
 	
 	virtual void BeginPlay() override;
@@ -58,6 +61,9 @@ public:
 	float LifeSpan = 5.f;
 	
 
+	UPROPERTY(BlueprintReadOnly, Category = "Combat")
+	TObjectPtr<AActor> CombatTarget;
+	
 protected:
 	
 	virtual void InitAbilityActorInfo() override;
@@ -67,7 +73,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "character class Defaults")
 	int32 Level = 1;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "character class Defaults")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "character class Defaults")
 	ECharacterClass CharacterClass = ECharacterClass::Warrior;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
