@@ -6,6 +6,7 @@
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
 #include "NiagaraFunctionLibrary.h"
+#include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "Aura/Aura.h"
 #include "Components/AudioComponent.h"
 #include "GameFramework/PlayerState.h"	// 阵营判定需要 APlayerState
@@ -89,6 +90,11 @@ void AAuraProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, 
 
 	// 命中判定只归服务器：客户端不参与判定、也不本机播表现，完全等服务器的多播
 	if (!HasAuthority())
+	{
+		return;
+	}
+	
+	if (!UAuraAbilitySystemLibrary::IsNotFriend(DamageEffectSpecHandle.Data.Get()->GetContext().GetEffectCauser(),OtherActor))
 	{
 		return;
 	}
