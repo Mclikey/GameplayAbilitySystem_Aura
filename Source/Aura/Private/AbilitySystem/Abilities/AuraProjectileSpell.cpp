@@ -29,7 +29,7 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 		
 		AActor* AvatarActor = GetAvatarActorFromActorInfo();   // 才是真正的施法角色
 		
-		const FVector SocketLocation = ICombatInterface::Execute_GetCombatSocketLocation(AvatarActor);
+		const FVector SocketLocation = ICombatInterface::Execute_GetCombatSocketLocation(AvatarActor,FAuraGameplayTags::Get().Montage_Attack_Weapon);
 		FRotator Rotation = (ProjectileTargetLocation - SocketLocation).Rotation();
 		
 		FTransform SpawnTransform;

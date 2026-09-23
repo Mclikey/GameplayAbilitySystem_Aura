@@ -23,20 +23,28 @@ public:
 	
 	virtual void BeginPlay() override;
 	
-	virtual FVector GetCombatSocketLocation_Implementation() override;
+	
 	
 	AAuraCharacterBase();
 	//重写GetAbilitySystemComponent()
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 	
-	virtual  UAnimMontage* GetHitReactMontage_Implementation() override;
-	
-	virtual void Die() override;
+	/** Combat Interface */
+    virtual  UAnimMontage* GetHitReactMontage_Implementation() override;
+    virtual void Die() override;
+    virtual FVector GetCombatSocketLocation_Implementation(const FGameplayTag& MontageTag) override;
+    virtual bool IsDead_Implementation() const override;
+    virtual AActor* GetAvatar_Implementation()  override;
+	virtual TArray<FTaggedMontage> GetAttackMontages_Implementation() override;
+    /** end Combat Interface*/
 	
 	UFUNCTION(NetMulticast, Reliable)
 	virtual void MulticastHandleDeath(); 
 
+	UPROPERTY(EditAnywhere,category = "Combat")
+	TArray<FTaggedMontage> AttackMontages;
+	
 protected:
 	
 	UPROPERTY(EditAnywhere, Category = "Combat")
@@ -45,7 +53,13 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	FName WeaponTipSocketName;
 	
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	FName LeftHandSocketName;
 	
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	FName RightHandSocketName;
+	
+	bool bDead = false;
 
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
